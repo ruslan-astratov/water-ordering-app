@@ -39,9 +39,15 @@ function Catalog() {
   const option = {
     infinite: false,
     lazyLoad: true,
+    onSlide: function show(e: number) {
+      console.log("Номер выбранного слайда", e + 1);
+      const selectedSlideID = e + 1;
+      // Здесь диспатчим в стор айдишку выбранного слайда
+      
+      dispatch(reset());
+    },
     onThumbnailClick: function show(e: any) {
       dispatch(reset());
-      // console.log("e", e.target.closest("button"));
     },
   };
 
