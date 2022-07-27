@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import mini_image_preview from "../../app/assets/images/mini_image_preview.png";
 import cn from "classnames";
+import MiniCounter from "../../Components/MiniCounter/MiniCounter";
 
 import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
-import { selectSliderItem } from "../../app/store/counterSlice";
+import { selectSliderItem, selectCount } from "../../app/store/counterSlice";
+import { getCommonCostBottles } from "../../utils/utilFunctions";
 
 import styles from "./ModalWindowQuickOrder.module.scss";
 
@@ -19,6 +21,7 @@ const ModalWindowQuickOrder = ({
   onClose = () => {},
 }: ModalWindowProps) => {
   const selectedItem = useAppSelector(selectSliderItem);
+  const count = useAppSelector(selectCount);
 
   // создаем обработчик нажатия клавиши Esc
   //   Поправить event: any
@@ -61,6 +64,17 @@ const ModalWindowQuickOrder = ({
               <img src={selectedItem?.thumbnail} alt="Мини превью" />
               <figcaption>{selectedItem?.descr}</figcaption>
             </figure>
+
+            <div className={styles.counter_and_value_wrapp}>
+              <div>
+                <MiniCounter />
+              </div>
+
+              <p className={styles.total_sum}>
+                <span>{getCommonCostBottles(count)}</span>
+                <span>₽</span>
+              </p>
+            </div>
           </div>
 
           <form className={styles.form}>

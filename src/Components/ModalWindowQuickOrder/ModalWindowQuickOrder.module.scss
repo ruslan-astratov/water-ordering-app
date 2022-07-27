@@ -67,12 +67,17 @@
 }
 
 .order_item_block {
+  display: flex;
   background-color: #e8f2ff;
   padding-top: 55px;
   padding-bottom: 40px;
   padding-left: 86px;
 
   margin-bottom: 40px;
+}
+
+.order_item_img_desc_wrapp {
+  display: flex;
 }
 
 .order_item_img_desc_wrapp figcaption {
@@ -132,6 +137,21 @@
   font-size: 24px;
   line-height: 30px;
   transition: all 0.2s ease;
+}
+
+.counter_and_value_wrapp {
+  display: flex;
+}
+
+.counter_and_value_wrapp .total_sum {
+  font-weight: 800;
+  font-size: 35px;
+  line-height: 41px;
+  text-align: center;
+}
+
+.counter_and_value_wrapp .total_sum span:last-child {
+  font-size: 23px;
 }
 
 // Форма
