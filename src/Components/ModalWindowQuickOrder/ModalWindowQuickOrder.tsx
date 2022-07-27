@@ -7,6 +7,7 @@ import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
 import { selectSliderItem, selectCount } from "../../app/store/counterSlice";
 import { getCommonCostBottles } from "../../utils/utilFunctions";
 
+import "../../index.scss";
 import styles from "./ModalWindowQuickOrder.module.scss";
 
 interface ModalWindowProps {
@@ -74,6 +75,11 @@ const ModalWindowQuickOrder = ({
                 <span>{getCommonCostBottles(count)}</span>
                 <span>₽</span>
               </p>
+
+              <label className="checkbox-ios">
+                <input type="checkbox" />
+                <span className="checkbox-ios-switch"></span>
+              </label>
             </div>
           </div>
 
