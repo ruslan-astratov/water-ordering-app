@@ -21,11 +21,19 @@ const ModalWindowQuickOrder = ({
   title = "",
   onClose = () => {},
 }: ModalWindowProps) => {
+  const [isSending, setIsSending] = useState(false);
+
   const [haveСontainer, setHaveСontainer] = useState(false);
-  const [isValid, setIsValid] = useState(false);
+  const [isDisabledSendButton, toggleDisabledSendButton] = useState(true);
+
   const [nameCompany, setNameCompany] = useState("");
+  const [isValidNameCompany, toggleValidNameCompany] = useState(false);
+
   const [phone, setPhone] = useState("");
+  const [isValidPhone, toggleValidPhone] = useState(false);
+
   const [email, setEmail] = useState("");
+  const [isValidEmail, toggleValidEmail] = useState(false);
 
   const selectedItem = useAppSelector(selectSliderItem);
   const count = useAppSelector(selectCount);
@@ -38,7 +46,23 @@ const ModalWindowQuickOrder = ({
     }
   };
 
+  // Метод блокировки/разблокировки кнопки. Смотрим - заполнены ли все три обязательных поля + если заполнены, все они должны быть валидны
+  // Будет срабатывать как при блюре/выходе из каждого инпута, так и при вводе символов в каждый инпут
+  const checkFieldsOnValid = () => {
+    if (
+      nameCompany &&
+      phone &&
+      email &&
+      isValidNameCompany &&
+      isValidPhone &&
+      isValidEmail
+    ) {
+      toggleDisabledSendButton(false);
+    } else toggleDisabledSendButton(true);
+  };
+
   const handleSubmit = async () => {
+    setIsSending(true);
     const payload = {
       count: 5,
       total_sum: 5,
@@ -47,9 +71,16 @@ const ModalWindowQuickOrder = ({
       phone: "+79186765060",
       email: "ruslan.astratov@yandex.ru",
     };
-    await sendQuickOrder(payload).then((data) => {
-      console.log("Данные, полученные с POST запроса", data);
-    });
+    await sendQuickOrder(payload)
+      .then((data) => {
+        console.log("Данные, полученные с POST запроса", data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsSending(false);
+      });
   };
 
   useEffect(() => {
@@ -145,7 +176,12 @@ const ModalWindowQuickOrder = ({
             </div>
 
             <button
-              className={styles.form_submit_button}
+              disabled={isDisabledSendButton || isSending}
+              className={
+                !isSending
+                  ? styles.form_submit_button
+                  : styles.form_submit_button_disabled
+              }
               onClick={handleSubmit}
             >
               Отправить
