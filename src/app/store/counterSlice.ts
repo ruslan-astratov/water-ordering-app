@@ -9,6 +9,7 @@ export interface CounterState {
   status: "idle" | "loading" | "failed";
   basket?: Number[] | [];
   sliderItems?: [];
+  selectedSliderItemID?: number;
 }
 
 const initialState: CounterState = {
@@ -16,6 +17,7 @@ const initialState: CounterState = {
   status: "idle",
   basket: [],
   sliderItems: [],
+  selectedSliderItemID: 1,
 };
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -57,6 +59,9 @@ export const counterSlice = createSlice({
     reset: (state) => {
       state.value = 1;
     },
+    setIdSelectedSliderItem: (state, action) => {
+      state.selectedSliderItemID = action.payload;
+    },
   },
 
   extraReducers: (builder) => {
@@ -85,8 +90,13 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { increment, decrement, reset, incrementByAmount } =
-  counterSlice.actions;
+export const {
+  increment,
+  decrement,
+  reset,
+  setIdSelectedSliderItem,
+  incrementByAmount,
+} = counterSlice.actions;
 
 // Выбрать значение из стора
 export const selectCount = (state: RootState) => state.counter.value;

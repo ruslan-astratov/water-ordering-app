@@ -18,6 +18,7 @@ import {
   selectSliderItems,
   reset,
   fetchSliderItems,
+  setIdSelectedSliderItem,
 } from "../../app/store/counterSlice";
 
 // import { getWaterItems } from "../../api/api";
@@ -43,7 +44,7 @@ function Catalog() {
       console.log("Номер выбранного слайда", e + 1);
       const selectedSlideID = e + 1;
       // Здесь диспатчим в стор айдишку выбранного слайда
-      
+      dispatch(setIdSelectedSliderItem(selectedSlideID));
       dispatch(reset());
     },
     onThumbnailClick: function show(e: any) {
