@@ -134,6 +134,8 @@ const ModalWindowQuickOrder = ({
   };
 
   const showInvalidDescForNameCompany = nameCompany && !isValidNameCompany;
+  const showInvalidDescForPhone =
+    phone !== "" && phone !== "+7 (___) ___-__-__" && !isValidPhone;
 
   useEffect(() => {
     document.addEventListener("keydown", onKeydown);
@@ -235,23 +237,16 @@ const ModalWindowQuickOrder = ({
             </div>
 
             <div className={styles.form_item}>
-              {/* <input
-                type="text"
-                className={styles.form_input}
-                required
-                value={phone}
-                onChange={checkValidInputPhone}
-                onBlur={checkValidInputPhone}
-              /> */}
               <InputMask
                 mask="+7 (999) 999-99-99"
-                // placeholder="+7 ("
                 value={phone}
                 onChange={(e) => checkValidInputPhone(e)}
                 onBlur={(e) => checkValidInputPhone(e)}
                 onFocus={hideLabel}
                 className={
-                  styles.form_input + " " + styles.form_input_phone_mask
+                  showInvalidDescForPhone
+                    ? styles.form_input_invalid
+                    : styles.form_input
                 }
               />
               <label
