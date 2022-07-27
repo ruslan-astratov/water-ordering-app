@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import ImageGallery from "react-image-gallery";
 import { Link } from "react-router-dom";
 
@@ -18,10 +18,8 @@ import {
   selectSliderItems,
   reset,
   fetchSliderItems,
-  setIdSelectedSliderItem,
+  setSelectedSliderItem,
 } from "../../app/store/counterSlice";
-
-// import { getWaterItems } from "../../api/api";
 
 import { getCommonCostBottles } from "../../utils/utilFunctions";
 
@@ -31,11 +29,10 @@ import styles from "./Catalog.module.scss";
 function Catalog() {
   const count = useAppSelector(selectCount);
   const images = useAppSelector(selectSliderItems);
-  console.log("images", images);
+
   const dispatch = useAppDispatch();
 
   const [isModal, setModal] = useState(false);
-  // const [images, setImages] = useState([]);
 
   const option = {
     infinite: false,
@@ -43,8 +40,14 @@ function Catalog() {
     onSlide: function show(e: number) {
       console.log("Номер выбранного слайда", e + 1);
       const selectedSlideID = e + 1;
-      // Здесь диспатчим в стор айдишку выбранного слайда
-      dispatch(setIdSelectedSliderItem(selectedSlideID));
+
+      const selectedItem = images?.find(
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        (i) => Number(i.id) === selectedSlideID
+      );
+      // Здесь диспатчим в стор выбранный слайд
+      dispatch(setSelectedSliderItem(selectedItem));
       dispatch(reset());
     },
     onThumbnailClick: function show(e: any) {
@@ -53,10 +56,6 @@ function Catalog() {
   };
 
   useEffect(() => {
-    // getWaterItems().then((json) => {
-    //   console.log("Данные, полученные с сервера", json);
-    //   setImages(json.data);
-    // });
     dispatch(fetchSliderItems());
   }, []);
 

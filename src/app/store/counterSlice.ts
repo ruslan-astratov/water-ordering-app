@@ -9,7 +9,7 @@ export interface CounterState {
   status: "idle" | "loading" | "failed";
   basket?: Number[] | [];
   sliderItems?: [];
-  selectedSliderItemID?: number;
+  selectedSliderItem?: object | {};
 }
 
 const initialState: CounterState = {
@@ -17,7 +17,7 @@ const initialState: CounterState = {
   status: "idle",
   basket: [],
   sliderItems: [],
-  selectedSliderItemID: 1,
+  selectedSliderItem: {},
 };
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -59,8 +59,8 @@ export const counterSlice = createSlice({
     reset: (state) => {
       state.value = 1;
     },
-    setIdSelectedSliderItem: (state, action) => {
-      state.selectedSliderItemID = action.payload;
+    setSelectedSliderItem: (state, action) => {
+      state.selectedSliderItem = action.payload;
     },
   },
 
@@ -83,6 +83,7 @@ export const counterSlice = createSlice({
       .addCase(fetchSliderItems.fulfilled, (state, action) => {
         state.status = "idle";
         state.sliderItems = action.payload;
+        state.selectedSliderItem = action.payload[0] || {};
       })
       .addCase(fetchSliderItems.rejected, (state) => {
         state.status = "failed";
@@ -94,7 +95,7 @@ export const {
   increment,
   decrement,
   reset,
-  setIdSelectedSliderItem,
+  setSelectedSliderItem,
   incrementByAmount,
 } = counterSlice.actions;
 
@@ -102,6 +103,8 @@ export const {
 export const selectCount = (state: RootState) => state.counter.value;
 export const selectSliderItems = (state: RootState) =>
   state.counter.sliderItems;
+export const selectSliderItemID = (state: RootState) =>
+  state.counter.selectedSliderItem;
 
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.

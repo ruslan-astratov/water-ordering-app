@@ -2,6 +2,12 @@ import React, { useEffect, useState } from "react";
 import mini_image_preview from "../../app/assets/images/mini_image_preview.png";
 import cn from "classnames";
 
+import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
+import {
+  selectSliderItems,
+  selectSliderItemID,
+} from "../../app/store/counterSlice";
+
 import styles from "./ModalWindowQuickOrder.module.scss";
 
 interface ModalWindowProps {
@@ -15,6 +21,9 @@ const ModalWindowQuickOrder = ({
   title = "",
   onClose = () => {},
 }: ModalWindowProps) => {
+  const idSelectedItem = useAppSelector(selectSliderItemID);
+  const sliderItems = useAppSelector(selectSliderItems);
+
   // создаем обработчик нажатия клавиши Esc
   //   Поправить event: any
   const onKeydown = (event: any) => {
