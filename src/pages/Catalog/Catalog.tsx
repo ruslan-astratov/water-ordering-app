@@ -15,11 +15,12 @@ import ModalWindowQuickOrder from "../../Components/ModalWindowQuickOrder/ModalW
 import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
 import {
   selectCount,
+  selectSliderItems,
   reset,
   fetchSliderItems,
 } from "../../app/store/counterSlice";
 
-import { getWaterItems } from "../../api/api";
+// import { getWaterItems } from "../../api/api";
 
 import { getCommonCostBottles } from "../../utils/utilFunctions";
 
@@ -28,10 +29,12 @@ import styles from "./Catalog.module.scss";
 
 function Catalog() {
   const count = useAppSelector(selectCount);
+  const images = useAppSelector(selectSliderItems);
+  console.log("images", images);
   const dispatch = useAppDispatch();
 
   const [isModal, setModal] = useState(false);
-  const [images, setImages] = useState([]);
+  // const [images, setImages] = useState([]);
 
   const option = {
     infinite: false,
@@ -58,7 +61,7 @@ function Catalog() {
 
       <div className={styles.slider_desc_wrapper}>
         <div className={styles.slider_block}>
-          <ImageGallery {...option} items={images} />
+          <ImageGallery {...option} items={images || []} />
           <div className={styles.slider_controls}></div>
         </div>
 

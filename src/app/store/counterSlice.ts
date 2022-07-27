@@ -33,7 +33,7 @@ export const incrementAsync = createAsyncThunk(
 );
 
 export const fetchSliderItems = createAsyncThunk(
-  "counter/fetchSliderItems",
+  "counter/sliderItems",
   async () => {
     const response = await getWaterItems();
     console.log("response", response.data);
@@ -77,7 +77,7 @@ export const counterSlice = createSlice({
       })
       .addCase(fetchSliderItems.fulfilled, (state, action) => {
         state.status = "idle";
-        state.sliderItems += action.payload;
+        state.sliderItems = action.payload;
       })
       .addCase(fetchSliderItems.rejected, (state) => {
         state.status = "failed";
