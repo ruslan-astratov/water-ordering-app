@@ -298,6 +298,13 @@
   margin-bottom: 38px;
 }
 
+.form_input_invalid_decr {
+  position: absolute;
+  bottom: -16px;
+  color: red;
+  font-size: 11px;
+}
+
 .form_submit_button,
 .form_submit_button_disabled {
   display: flex;

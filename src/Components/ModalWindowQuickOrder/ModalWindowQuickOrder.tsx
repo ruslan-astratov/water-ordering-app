@@ -118,6 +118,8 @@ const ModalWindowQuickOrder = ({
       });
   };
 
+  const showInvalidDescForNameCompany = nameCompany && !isValidNameCompany;
+
   useEffect(() => {
     document.addEventListener("keydown", onKeydown);
     return () => document.removeEventListener("keydown", onKeydown);
@@ -197,7 +199,7 @@ const ModalWindowQuickOrder = ({
               <input
                 type="text"
                 className={
-                  nameCompany && !isValidNameCompany
+                  showInvalidDescForNameCompany
                     ? styles.form_input_invalid
                     : styles.form_input
                 }
@@ -209,6 +211,11 @@ const ModalWindowQuickOrder = ({
               <label className={styles.form_label}>
                 Ваше имя или название компании
               </label>
+              {showInvalidDescForNameCompany && (
+                <span className={styles.form_input_invalid_decr}>
+                  допускается строка длиной от пяти символов
+                </span>
+              )}
             </div>
 
             <div className={styles.form_item}>
