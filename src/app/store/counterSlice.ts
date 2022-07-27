@@ -3,7 +3,6 @@ import { RootState, AppThunk } from "./store";
 import { fetchCount } from "../../features/counter/counterAPI";
 
 import { getWaterItems } from "../../api/api";
-import { type } from "os";
 
 type SliderItemType = {
   original?: string;

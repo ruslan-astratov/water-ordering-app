@@ -62,6 +62,27 @@ const ModalWindowQuickOrder = ({
               <figcaption>{selectedItem?.descr}</figcaption>
             </figure>
           </div>
+
+          <form className={styles.form}>
+            <div className={styles.form_item}>
+              <input type="text" className={styles.form_input} required />
+              <label className={styles.form_label}>
+                Ваше имя или название компании
+              </label>
+            </div>
+
+            <div className={styles.form_item}>
+              <input type="text" className={styles.form_input} required />
+              <label className={styles.form_label}>Телефон </label>
+            </div>
+
+            <div className={styles.form_item}>
+              <input type="text" className={styles.form_input} required />
+              <label className={styles.form_label}>E-mail</label>
+            </div>
+
+            {/* <button type="submit">Submit</button> */}
+          </form>
         </div>
       </div>
     </div>
