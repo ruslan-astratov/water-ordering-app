@@ -4,7 +4,9 @@ import MiniCounter from "../../Components/MiniCounter/MiniCounter";
 import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
 import { selectSliderItem, selectCount } from "../../app/store/counterSlice";
 import { getCommonCostBottles } from "../../utils/utilFunctions";
-import close_modal_icon from "../../app/assets/icons/close_modal_icon.svg";
+
+import { sendQuickOrder } from "../../api/api";
+
 import "../../index.scss";
 import styles from "./ModalWindowQuickOrder.module.scss";
 
@@ -20,6 +22,11 @@ const ModalWindowQuickOrder = ({
   onClose = () => {},
 }: ModalWindowProps) => {
   const [haveСontainer, setHaveСontainer] = useState(false);
+  const [isValid, setIsValid] = useState(false);
+  const [nameCompany, setNameCompany] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+
   const selectedItem = useAppSelector(selectSliderItem);
   const count = useAppSelector(selectCount);
 
@@ -29,6 +36,20 @@ const ModalWindowQuickOrder = ({
     if (event.key === "Escape") {
       onClose();
     }
+  };
+
+  const handleSubmit = async () => {
+    const payload = {
+      count: 5,
+      total_sum: 5,
+      have_container: false,
+      company_name: "ООО Кодеры",
+      phone: "+79186765060",
+      email: "ruslan.astratov@yandex.ru",
+    };
+    await sendQuickOrder(payload).then((data) => {
+      console.log("Данные, полученные с POST запроса", data);
+    });
   };
 
   useEffect(() => {
@@ -123,7 +144,12 @@ const ModalWindowQuickOrder = ({
               <label className={styles.form_label}>E-mail</label>
             </div>
 
-            {/* <button type="submit">Submit</button> */}
+            <button
+              className={styles.form_submit_button}
+              onClick={handleSubmit}
+            >
+              Отправить
+            </button>
           </form>
         </div>
       </div>

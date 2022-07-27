@@ -287,6 +287,41 @@
   left: 0;
 }
 
+.form_input:last-child {
+  margin-bottom: 38px;
+}
+
+.form_submit_button {
+  display: flex;
+  justify-content: center;
+  width: 362px;
+  height: 63px;
+  background: #10ebf8;
+  border: 2px solid #10ebf8;
+  margin-left: auto;
+  border-radius: 2px;
+
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #191919;
+  text-decoration: none;
+  transition: all 0.4s ease;
+}
+
+.form_submit_button:hover {
+  cursor: pointer;
+  background: linear-gradient(0deg, #015584, #015584), #e4f1f9;
+  border: 2px solid #10ebf8;
+  color: #10ebf8;
+  filter: drop-shadow(0px 0px 9px #10ebf8);
+}
+
 @keyframes appear {
   from {
     opacity: 0;
