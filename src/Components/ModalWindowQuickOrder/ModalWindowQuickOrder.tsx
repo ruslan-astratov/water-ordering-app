@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import MiniCounter from "../../Components/MiniCounter/MiniCounter";
+import cn from "classnames";
+
+import InputMask from "react-input-mask";
 
 import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
 import { selectSliderItem, selectCount } from "../../app/store/counterSlice";
@@ -36,6 +39,12 @@ const ModalWindowQuickOrder = ({
 
   const [email, setEmail] = useState("");
   const [isValidEmail, toggleValidEmail] = useState(false);
+
+  // Управление позицией лейбла - в маске для ввода телефона
+  const [isHideLabel, toggleHideLabel] = useState(false);
+  const hideLabel = () => {
+    toggleHideLabel(true);
+  };
 
   const selectedItem = useAppSelector(selectSliderItem);
   const count = useAppSelector(selectCount);
@@ -80,11 +89,17 @@ const ModalWindowQuickOrder = ({
     }
   };
 
-  const checkValidInputPhone = () => {
+  const checkValidInputPhone = (e: any) => {
+    const val = e.target.value;
+    if (val === "") toggleHideLabel(false);
+    setPhone(val);
+
     // Сначала валидируем сам инпут, затем запускаем метод блокировки/разблокировки кнопки
-    if (phone && phoneRegex.test(phone)) {
-      // toggleValidPhone(true);
-      // setTimeout(() => checkFieldsOnValid(), 0);
+    if (val.length > 0 && phoneRegex.test(val)) {
+      toggleValidPhone(true);
+      setTimeout(() => checkFieldsOnValid(), 0);
+    } else {
+      toggleValidPhone(false);
     }
   };
 
@@ -220,15 +235,32 @@ const ModalWindowQuickOrder = ({
             </div>
 
             <div className={styles.form_item}>
-              <input
+              {/* <input
                 type="text"
                 className={styles.form_input}
                 required
                 value={phone}
                 onChange={checkValidInputPhone}
                 onBlur={checkValidInputPhone}
+              /> */}
+              <InputMask
+                mask="+7 (999) 999-99-99"
+                // placeholder="+7 ("
+                value={phone}
+                onChange={(e) => checkValidInputPhone(e)}
+                onBlur={(e) => checkValidInputPhone(e)}
+                onFocus={hideLabel}
+                className={
+                  styles.form_input + " " + styles.form_input_phone_mask
+                }
               />
-              <label className={styles.form_label}>Телефон </label>
+              <label
+                className={
+                  isHideLabel ? styles.form_label : styles.form_label_active
+                }
+              >
+                Телефон{" "}
+              </label>
             </div>
 
             <div className={styles.form_item}>
