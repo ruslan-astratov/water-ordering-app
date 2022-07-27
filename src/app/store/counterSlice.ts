@@ -3,13 +3,28 @@ import { RootState, AppThunk } from "./store";
 import { fetchCount } from "../../features/counter/counterAPI";
 
 import { getWaterItems } from "../../api/api";
+import { type } from "os";
+
+type SliderItemType = {
+  original?: string;
+  thumbnail?: string;
+  descr?: string;
+  id?: string;
+};
 
 export interface CounterState {
   value: number;
   status: "idle" | "loading" | "failed";
   basket?: Number[] | [];
   sliderItems?: [];
-  selectedSliderItem?: object | {};
+  selectedSliderItem?:
+    | SliderItemType
+    | {
+        original: "";
+        thumbnail: "";
+        descr: "";
+        id: "";
+      };
 }
 
 const initialState: CounterState = {
@@ -103,7 +118,7 @@ export const {
 export const selectCount = (state: RootState) => state.counter.value;
 export const selectSliderItems = (state: RootState) =>
   state.counter.sliderItems;
-export const selectSliderItemID = (state: RootState) =>
+export const selectSliderItem = (state: RootState) =>
   state.counter.selectedSliderItem;
 
 // We can also write thunks by hand, which may contain both sync and async logic.

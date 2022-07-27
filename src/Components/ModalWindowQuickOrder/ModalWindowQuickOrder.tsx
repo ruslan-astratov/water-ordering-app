@@ -3,10 +3,7 @@ import mini_image_preview from "../../app/assets/images/mini_image_preview.png";
 import cn from "classnames";
 
 import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
-import {
-  selectSliderItems,
-  selectSliderItemID,
-} from "../../app/store/counterSlice";
+import { selectSliderItem } from "../../app/store/counterSlice";
 
 import styles from "./ModalWindowQuickOrder.module.scss";
 
@@ -21,8 +18,7 @@ const ModalWindowQuickOrder = ({
   title = "",
   onClose = () => {},
 }: ModalWindowProps) => {
-  const idSelectedItem = useAppSelector(selectSliderItemID);
-  const sliderItems = useAppSelector(selectSliderItems);
+  const selectedItem = useAppSelector(selectSliderItem);
 
   // создаем обработчик нажатия клавиши Esc
   //   Поправить event: any
@@ -62,8 +58,8 @@ const ModalWindowQuickOrder = ({
         <div className={styles.modal_body}>
           <div className={styles.order_item_block}>
             <figure className={styles.order_item_img_desc_wrapp}>
-              <img src={mini_image_preview} alt="Мини превью" />
-              <figcaption>Вода питьевая "Suyum" в 18,9 л бутылях</figcaption>
+              <img src={selectedItem?.thumbnail} alt="Мини превью" />
+              <figcaption>{selectedItem?.descr}</figcaption>
             </figure>
           </div>
         </div>
