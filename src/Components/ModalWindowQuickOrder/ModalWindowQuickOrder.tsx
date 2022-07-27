@@ -7,6 +7,8 @@ import { getCommonCostBottles } from "../../utils/utilFunctions";
 
 import { sendQuickOrder } from "../../api/api";
 
+import { phoneRegex, emailRegex } from "../../utils/regexp";
+
 import "../../index.scss";
 import styles from "./ModalWindowQuickOrder.module.scss";
 
@@ -38,14 +40,6 @@ const ModalWindowQuickOrder = ({
   const selectedItem = useAppSelector(selectSliderItem);
   const count = useAppSelector(selectCount);
 
-  // создаем обработчик нажатия клавиши Esc
-  //   Поправить event: any
-  const onKeydown = (event: any) => {
-    if (event.key === "Escape") {
-      onClose();
-    }
-  };
-
   // Метод блокировки/разблокировки кнопки. Смотрим - заполнены ли все три обязательных поля + если заполнены, все они должны быть валидны
   // Будет срабатывать как при блюре/выходе из каждого инпута, так и при вводе символов в каждый инпут
   const checkFieldsOnValid = () => {
@@ -59,6 +53,47 @@ const ModalWindowQuickOrder = ({
     ) {
       toggleDisabledSendButton(false);
     } else toggleDisabledSendButton(true);
+  };
+
+  useEffect(() => {
+    // Метод блокировки, разблокировки будет срабатывать каждый раз - при вводе в любой из инпутов
+    checkFieldsOnValid();
+  }, [nameCompany, phone, email]);
+
+  // создаем обработчик нажатия клавиши Esc
+  //   Поправить event: any
+  const onKeydown = (event: any) => {
+    if (event.key === "Escape") {
+      onClose();
+    }
+  };
+
+  const checkValidInputCompanyName = (e: any) => {
+    const val = e.target.value;
+    setNameCompany(val);
+    // Сначала валидируем сам инпут, затем запускаем метод блокировки/разблокировки кнопки
+    if (val && val.length > 5 && val.length <= 256) {
+      toggleValidNameCompany(true);
+      setTimeout(() => checkFieldsOnValid(), 0);
+    } else {
+      toggleValidNameCompany(false);
+    }
+  };
+
+  const checkValidInputPhone = () => {
+    // Сначала валидируем сам инпут, затем запускаем метод блокировки/разблокировки кнопки
+    if (phone && phoneRegex.test(phone)) {
+      // toggleValidPhone(true);
+      // setTimeout(() => checkFieldsOnValid(), 0);
+    }
+  };
+
+  const checkValidInputEmail = () => {
+    // Сначала валидируем сам инпут, затем запускаем метод блокировки/разблокировки кнопки
+    if (email && emailRegex.test(email)) {
+      // toggleValidEmail(true);
+      // setTimeout(() => checkFieldsOnValid(), 0);
+    }
   };
 
   const handleSubmit = async () => {
@@ -159,19 +194,44 @@ const ModalWindowQuickOrder = ({
 
           <form className={styles.form}>
             <div className={styles.form_item}>
-              <input type="text" className={styles.form_input} required />
+              <input
+                type="text"
+                className={
+                  nameCompany && !isValidNameCompany
+                    ? styles.form_input_invalid
+                    : styles.form_input
+                }
+                required
+                value={nameCompany}
+                onChange={(e) => checkValidInputCompanyName(e)}
+                onBlur={(e) => checkValidInputCompanyName(e)}
+              />
               <label className={styles.form_label}>
                 Ваше имя или название компании
               </label>
             </div>
 
             <div className={styles.form_item}>
-              <input type="text" className={styles.form_input} required />
+              <input
+                type="text"
+                className={styles.form_input}
+                required
+                value={phone}
+                onChange={checkValidInputPhone}
+                onBlur={checkValidInputPhone}
+              />
               <label className={styles.form_label}>Телефон </label>
             </div>
 
             <div className={styles.form_item}>
-              <input type="text" className={styles.form_input} required />
+              <input
+                type="text"
+                className={styles.form_input}
+                required
+                value={email}
+                onChange={checkValidInputEmail}
+                onBlur={checkValidInputEmail}
+              />
               <label className={styles.form_label}>E-mail</label>
             </div>
 
