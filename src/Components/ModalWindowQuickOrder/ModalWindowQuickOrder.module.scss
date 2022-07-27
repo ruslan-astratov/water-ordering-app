@@ -38,7 +38,7 @@
 .modal_footer {
   display: flex;
   align-items: center;
-  padding: 1rem;
+  // padding: 1rem;
 }
 .modal_header {
   justify-content: space-between;
@@ -57,11 +57,22 @@
   border-top: 1px solid #dbdbdb;
   justify-content: flex-end;
 }
+
 .modal_close {
+  width: 59px;
+  height: 59px;
+  position: absolute;
+  right: 29px;
+  top: 29px;
   cursor: pointer;
   padding: 1rem;
-  margin: -1rem -1rem -1rem auto;
+  border-radius: 50%;
+  border: 1px solid #cbe5ed;
+  background-image: url("../../app/assets/icons/close_modal_icon.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
+
 .modal_body {
   overflow: auto;
 }

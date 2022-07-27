@@ -4,7 +4,7 @@ import MiniCounter from "../../Components/MiniCounter/MiniCounter";
 import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
 import { selectSliderItem, selectCount } from "../../app/store/counterSlice";
 import { getCommonCostBottles } from "../../utils/utilFunctions";
-
+import close_modal_icon from "../../app/assets/icons/close_modal_icon.svg";
 import "../../index.scss";
 import styles from "./ModalWindowQuickOrder.module.scss";
 
