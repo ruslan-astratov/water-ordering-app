@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ImageGallery from "react-image-gallery";
 import { Link } from "react-router-dom";
 
@@ -13,61 +13,44 @@ import MiniCounter from "../../Components/MiniCounter/MiniCounter";
 import ModalWindowQuickOrder from "../../Components/ModalWindowQuickOrder/ModalWindowQuickOrder";
 
 import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
-import { selectCount } from "../../app/store/counterSlice";
+import {
+  selectCount,
+  reset,
+  fetchSliderItems,
+} from "../../app/store/counterSlice";
 
 import { getWaterItems } from "../../api/api";
 
-import {
-  getCostOneBottle,
-  getCommonCostBottles,
-} from "../../utils/utilFunctions";
+import { getCommonCostBottles } from "../../utils/utilFunctions";
 
 import "../../index.scss";
 import styles from "./Catalog.module.scss";
 
 function Catalog() {
   const count = useAppSelector(selectCount);
+  const dispatch = useAppDispatch();
+
   const [isModal, setModal] = useState(false);
   const [images, setImages] = useState([]);
 
+  const option = {
+    infinite: false,
+    lazyLoad: true,
+    onThumbnailClick: function show(e: any) {
+      dispatch(reset());
+      // console.log("e", e.target.closest("button"));
+    },
+  };
+
   useEffect(() => {
-    getWaterItems().then((json) => {
-      console.log("Данные, полученные с сервера", json);
-      setImages(json.data);
-    });
+    // getWaterItems().then((json) => {
+    //   console.log("Данные, полученные с сервера", json);
+    //   setImages(json.data);
+    // });
+    dispatch(fetchSliderItems());
   }, []);
 
   const onClose = () => setModal(false);
-  // const images = [
-  //   {
-  //     original:
-  //       "https://firebasestorage.googleapis.com/v0/b/water-ordering-app.appspot.com/o/big_image_preview.png?alt=media&token=226a1cb0-5c12-4263-b9cc-dd192df9ff07",
-  //     thumbnail:
-  //       "https://firebasestorage.googleapis.com/v0/b/water-ordering-app.appspot.com/o/mini_image_preview.png?alt=media&token=cdaba260-0260-4225-a547-acd82219aa48",
-  //     descr: "Вода питьевая «Suyum» в 18,9 л бутылях",
-  //   },
-  //   {
-  //     original:
-  //       "https://firebasestorage.googleapis.com/v0/b/water-ordering-app.appspot.com/o/big_image_preview.png?alt=media&token=226a1cb0-5c12-4263-b9cc-dd192df9ff07",
-  //     thumbnail:
-  //       "https://firebasestorage.googleapis.com/v0/b/water-ordering-app.appspot.com/o/mini_image_preview.png?alt=media&token=cdaba260-0260-4225-a547-acd82219aa48",
-  //     descr: "Вода питьевая «Suyum» в 18,9 л бутылях",
-  //   },
-  //   {
-  //     original:
-  //       "https://firebasestorage.googleapis.com/v0/b/water-ordering-app.appspot.com/o/big_image_preview.png?alt=media&token=226a1cb0-5c12-4263-b9cc-dd192df9ff07",
-  //     thumbnail:
-  //       "https://firebasestorage.googleapis.com/v0/b/water-ordering-app.appspot.com/o/mini_image_preview.png?alt=media&token=cdaba260-0260-4225-a547-acd82219aa48",
-  //     descr: "Вода питьевая «Suyum» в 18,9 л бутылях",
-  //   },
-  //   {
-  //     original:
-  //       "https://firebasestorage.googleapis.com/v0/b/water-ordering-app.appspot.com/o/big_image_preview.png?alt=media&token=226a1cb0-5c12-4263-b9cc-dd192df9ff07",
-  //     thumbnail:
-  //       "https://firebasestorage.googleapis.com/v0/b/water-ordering-app.appspot.com/o/mini_image_preview.png?alt=media&token=cdaba260-0260-4225-a547-acd82219aa48",
-  //     descr: "Вода питьевая «Suyum» в 18,9 л бутылях",
-  //   },
-  // ];
 
   return (
     <div className={`container + ${styles.catalog_page}`}>
@@ -75,7 +58,7 @@ function Catalog() {
 
       <div className={styles.slider_desc_wrapper}>
         <div className={styles.slider_block}>
-          <ImageGallery items={images} />
+          <ImageGallery {...option} items={images} />
           <div className={styles.slider_controls}></div>
         </div>
 
