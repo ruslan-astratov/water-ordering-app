@@ -1,0 +1,28 @@
+.mini_counter {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 15px;
+  padding-right: 15px;
+  align-items: center;
+  width: 145px;
+  height: 63px;
+  background: #ffffff;
+  border-radius: 2px;
+}
+
+.mini_counter_decrement_button:hover,
+.mini_counter_increment_button:hover {
+  cursor: pointer;
+}
+
+.mini_counter_decrement_button,
+.mini_counter_increment_button {
+  display: flex;
+  align-items: center;
+}
+
+.count_value {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+}
