@@ -198,6 +198,7 @@ const ModalWindowQuickOrder = ({
             <div className={styles.form_item}>
               <input
                 type="text"
+                maxLength={256}
                 className={
                   showInvalidDescForNameCompany
                     ? styles.form_input_invalid
