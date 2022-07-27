@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import mini_image_preview from "../../app/assets/images/mini_image_preview.png";
-import cn from "classnames";
 import MiniCounter from "../../Components/MiniCounter/MiniCounter";
 
 import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
@@ -21,6 +19,7 @@ const ModalWindowQuickOrder = ({
   title = "",
   onClose = () => {},
 }: ModalWindowProps) => {
+  const [haveСontainer, setHaveСontainer] = useState(false);
   const selectedItem = useAppSelector(selectSliderItem);
   const count = useAppSelector(selectCount);
 
@@ -67,7 +66,7 @@ const ModalWindowQuickOrder = ({
             </figure>
 
             <div className={styles.counter_and_value_wrapp}>
-              <div>
+              <div className={styles.counter_wrapp}>
                 <MiniCounter />
               </div>
 
@@ -76,10 +75,33 @@ const ModalWindowQuickOrder = ({
                 <span>₽</span>
               </p>
 
-              <label className="checkbox-ios">
-                <input type="checkbox" />
-                <span className="checkbox-ios-switch"></span>
-              </label>
+              <div className={styles.switch_toggle_desc_wrapp}>
+                <span
+                  className={
+                    haveСontainer
+                      ? styles.switch_toggle_desc_active
+                      : styles.switch_toggle_desc
+                  }
+                >
+                  Без тары
+                </span>
+                <label className="checkbox-ios">
+                  <input
+                    type="checkbox"
+                    onChange={() => setHaveСontainer(!haveСontainer)}
+                  />
+                  <span className="checkbox-ios-switch"></span>
+                </label>
+                <span
+                  className={
+                    !haveСontainer
+                      ? styles.switch_toggle_desc_active
+                      : styles.switch_toggle_desc
+                  }
+                >
+                  Тара есть
+                </span>
+              </div>
             </div>
           </div>
 

@@ -72,17 +72,36 @@
   background-color: #e8f2ff;
   padding-top: 55px;
   padding-bottom: 40px;
-  padding-left: 86px;
+  padding-left: 100px;
 
   margin-bottom: 40px;
 }
 
 .order_item_img_desc_wrapp {
   display: flex;
+  align-items: center;
+  margin-right: 32px;
+}
+
+.order_item_img_desc_wrapp img {
+  display: block;
+  width: 64px;
+  height: 64px;
+
+  background: #ffffff;
+  border: 1px solid #ccddf0;
+  border-radius: 10px;
+  object-fit: none;
+
+  margin-right: 12px;
 }
 
 .order_item_img_desc_wrapp figcaption {
   width: 185px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
 }
 
 .modal-content {
@@ -144,15 +163,69 @@
   display: flex;
 }
 
+.counter_wrapp {
+  position: relative;
+  margin-right: 49px;
+}
+
+.counter_wrapp::after {
+  position: absolute;
+  display: block;
+  top: -34px;
+  content: "Кол-во";
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+
+  color: #5b5b5b;
+}
+
+.total_sum {
+  position: relative;
+}
+
+.total_sum::before {
+  position: absolute;
+  display: block;
+  top: -35px;
+  content: "Сумма";
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+
+  color: #5b5b5b;
+}
+
 .counter_and_value_wrapp .total_sum {
+  display: flex;
+  align-items: center;
   font-weight: 800;
   font-size: 35px;
   line-height: 41px;
   text-align: center;
+  margin-right: 36px;
 }
 
 .counter_and_value_wrapp .total_sum span:last-child {
   font-size: 23px;
+}
+
+.switch_toggle_desc_wrapp {
+  display: flex;
+  align-items: center;
+}
+
+.switch_toggle_desc {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.switch_toggle_desc_active {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  color: #8595a4;
 }
 
 // Форма
