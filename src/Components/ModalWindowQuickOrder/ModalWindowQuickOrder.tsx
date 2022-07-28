@@ -81,7 +81,7 @@ const ModalWindowQuickOrder = ({
     const val = e.target.value;
     setNameCompany(val);
     // Сначала валидируем сам инпут, затем запускаем метод блокировки/разблокировки кнопки
-    if (val && val.length > 5 && val.length <= 256) {
+    if (val && val.length >= 3 && val.length <= 256) {
       toggleValidNameCompany(true);
       setTimeout(() => checkFieldsOnValid(), 0);
     } else {
@@ -103,11 +103,15 @@ const ModalWindowQuickOrder = ({
     }
   };
 
-  const checkValidInputEmail = () => {
+  const checkValidInputEmail = (e: any) => {
+    const val = e.target.value;
+    setEmail(val);
     // Сначала валидируем сам инпут, затем запускаем метод блокировки/разблокировки кнопки
-    if (email && emailRegex.test(email)) {
-      // toggleValidEmail(true);
-      // setTimeout(() => checkFieldsOnValid(), 0);
+    if (val && emailRegex.test(val)) {
+      toggleValidEmail(true);
+      setTimeout(() => checkFieldsOnValid(), 0);
+    } else {
+      toggleValidEmail(false);
     }
   };
 
@@ -136,6 +140,7 @@ const ModalWindowQuickOrder = ({
   const showInvalidDescForNameCompany = nameCompany && !isValidNameCompany;
   const showInvalidDescForPhone =
     phone !== "" && phone !== "+7 (___) ___-__-__" && !isValidPhone;
+  const showInvalidDescForEmail = email && !isValidEmail;
 
   useEffect(() => {
     document.addEventListener("keydown", onKeydown);
@@ -231,7 +236,7 @@ const ModalWindowQuickOrder = ({
               </label>
               {showInvalidDescForNameCompany && (
                 <span className={styles.form_input_invalid_decr}>
-                  допускается строка длиной от пяти символов
+                  допускается строка длиной от трёх символов
                 </span>
               )}
             </div>
@@ -261,11 +266,15 @@ const ModalWindowQuickOrder = ({
             <div className={styles.form_item}>
               <input
                 type="text"
-                className={styles.form_input}
+                className={
+                  showInvalidDescForEmail
+                    ? styles.form_input_invalid
+                    : styles.form_input
+                }
                 required
                 value={email}
-                onChange={checkValidInputEmail}
-                onBlur={checkValidInputEmail}
+                onChange={(e) => checkValidInputEmail(e)}
+                onBlur={(e) => checkValidInputEmail(e)}
               />
               <label className={styles.form_label}>E-mail</label>
             </div>
