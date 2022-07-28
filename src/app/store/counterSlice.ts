@@ -115,6 +115,8 @@ export const {
 
 // Выбрать значение из стора
 export const selectCount = (state: RootState) => state.counter.value;
+export const selectStatus = (state: RootState) => state.counter.status;
+
 export const selectSliderItems = (state: RootState) =>
   state.counter.sliderItems;
 export const selectSliderItem = (state: RootState) =>

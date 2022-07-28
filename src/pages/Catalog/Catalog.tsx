@@ -11,10 +11,12 @@ import timer from "../../app/assets/icons/timer.svg";
 
 import MiniCounter from "../../Components/MiniCounter/MiniCounter";
 import ModalWindowQuickOrder from "../../Components/ModalWindowQuickOrder/ModalWindowQuickOrder";
+import Loader from "../../Components/Loader/Loader";
 
 import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
 import {
   selectCount,
+  selectStatus,
   selectSliderItems,
   reset,
   fetchSliderItems,
@@ -28,6 +30,7 @@ import styles from "./Catalog.module.scss";
 
 function Catalog() {
   const count = useAppSelector(selectCount);
+  const status = useAppSelector(selectStatus);
   const images = useAppSelector(selectSliderItems);
 
   const dispatch = useAppDispatch();
@@ -60,6 +63,8 @@ function Catalog() {
   }, []);
 
   const onClose = () => setModal(false);
+
+  if (status === "loading") return <Loader />;
 
   return (
     <div className={`container + ${styles.catalog_page}`}>
