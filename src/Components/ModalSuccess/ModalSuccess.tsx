@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 import "../../index.scss";
-import styles from "./ModalWindowQuickOrder.module.scss";
+import styles from "./ModalSuccess.module.scss";
 
 interface ModalWindowProps {
   visible: boolean;

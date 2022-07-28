@@ -11,6 +11,8 @@ import timer from "../../app/assets/icons/timer.svg";
 
 import MiniCounter from "../../Components/MiniCounter/MiniCounter";
 import ModalWindowQuickOrder from "../../Components/ModalWindowQuickOrder/ModalWindowQuickOrder";
+import ModalSuccess from "../../Components/ModalSuccess/ModalSuccess";
+
 import Loader from "../../Components/Loader/Loader";
 
 import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
@@ -65,6 +67,11 @@ function Catalog() {
   useEffect(() => {
     dispatch(fetchSliderItems());
   }, [dispatch]);
+
+  const successSubmit = () => {
+    setOpenModalQuickOder(false);
+    setTimeout(() => setOpenModalSuccess(true), 200);
+  };
 
   if (status === "loading") return <Loader />;
 
@@ -206,6 +213,12 @@ function Catalog() {
         visible={isOpenModalQuickOder}
         title="Быстрый заказ"
         onClose={onCloseModalQuickOder}
+        successSubmit={successSubmit}
+      />
+
+      <ModalSuccess
+        visible={isOpenModalSuccess}
+        onClose={onCloseModalSuccess}
       />
     </div>
   );

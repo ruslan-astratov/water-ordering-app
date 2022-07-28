@@ -19,12 +19,14 @@ interface ModalWindowProps {
   visible: boolean;
   title: string;
   onClose: () => void;
+  successSubmit: () => void;
 }
 
 const ModalWindowQuickOrder = ({
   visible = false,
   title = "",
   onClose = () => {},
+  successSubmit = () => {},
 }: ModalWindowProps) => {
   const [isSending, setIsSending] = useState(false);
 
@@ -129,6 +131,7 @@ const ModalWindowQuickOrder = ({
     await sendQuickOrder(payload)
       .then((data) => {
         console.log("Данные, полученные с POST запроса", data);
+        successSubmit();
       })
       .catch((err) => {
         console.log(err);
