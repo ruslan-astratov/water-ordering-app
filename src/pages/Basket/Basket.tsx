@@ -63,7 +63,12 @@ function Basket() {
             })}
         </div>
 
-        <div className={styles.orders_total_sum_wrapper}>итого: {}</div>
+        <div className={styles.orders_total_sum_wrapper}>
+          итого: {/* @ts-ignore */}
+          {basket.reduce((acc, curr) => {
+            return acc + getCommonCostBottles(curr.count);
+          }, 0)}
+        </div>
       </div>
     </div>
   );
