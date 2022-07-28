@@ -11,10 +11,18 @@ type SliderItemType = {
   id?: string;
 };
 
+type OrderType = {
+  original?: string;
+  thumbnail?: string;
+  descr?: string;
+  id?: string;
+  count?: number;
+};
+
 export interface CounterState {
   value: number;
   status: "idle" | "loading" | "failed";
-  basket?: Number[] | [];
+  basket?: OrderType[] | [];
   sliderItems?: [];
   selectedSliderItem?:
     | SliderItemType
