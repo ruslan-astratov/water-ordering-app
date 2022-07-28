@@ -23,7 +23,7 @@ import {
   selectSliderItem,
   selectSliderItems,
   reset,
-  setAddToBasket,
+  updateBasket,
   fetchSliderItems,
   setSelectedSliderItem,
 } from "../../app/store/counterSlice";
@@ -97,13 +97,13 @@ function Catalog() {
           return { ...order, count: count + order?.count };
         } else return order;
       });
-      dispatch(setAddToBasket(newBasket));
+      dispatch(updateBasket(newBasket));
     } else {
       const newOrder = { ...selectedItem, count: count };
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const newBasketWithAddedOrder = basket.concat(newOrder);
-      dispatch(setAddToBasket(newBasketWithAddedOrder));
+      dispatch(updateBasket(newBasketWithAddedOrder));
     }
 
     navigate("/basket");

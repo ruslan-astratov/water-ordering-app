@@ -89,8 +89,9 @@ export const counterSlice = createSlice({
     setStateOpenModalSuccess: (state, action) => {
       state.isOpenModalSuccess = action.payload;
     },
-    // Добавление в корзину
-    setAddToBasket: (state, action) => {
+    // Добавление в корзину (на странице "Каталог")
+    // Уменьшение/Увеличение количества товара одного типа (клик по -/+ у конкретного товара в Корзине)
+    updateBasket: (state, action) => {
       state.basket = action.payload;
     },
   },
@@ -117,7 +118,7 @@ export const {
   reset,
   setSelectedSliderItem,
   setStateOpenModalSuccess,
-  setAddToBasket,
+  updateBasket,
   incrementByAmount,
 } = counterSlice.actions;
 

@@ -5,6 +5,8 @@ import {
   decrement,
   increment,
   selectCount,
+  updateBasket,
+  selectBasket,
 } from "../../app/store/counterSlice";
 
 import minus_icon from "../../app/assets/icons/minus_icon.svg";
@@ -18,6 +20,8 @@ interface MiniCounterProps {
 
 const MiniCounter = ({ orderCount = null }: MiniCounterProps) => {
   const count = useAppSelector(selectCount);
+  const basket = useAppSelector(selectBasket);
+
   const dispatch = useAppDispatch();
 
   return (
