@@ -73,7 +73,9 @@ function Catalog() {
   };
 
   useEffect(() => {
-    dispatch(fetchSliderItems());
+    if (images?.length === 0) {
+      dispatch(fetchSliderItems());
+    }
   }, [dispatch]);
 
   const successSubmit = () => {
