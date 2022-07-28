@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ImageGallery from "react-image-gallery";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import clean_water from "../../app/assets/icons/clean_water.svg";
 import softy_water from "../../app/assets/icons/softy_water.svg";
@@ -19,8 +19,11 @@ import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
 import {
   selectCount,
   selectStatus,
+  selectBasket,
+  selectSliderItem,
   selectSliderItems,
   reset,
+  setAddToBasket,
   fetchSliderItems,
   setSelectedSliderItem,
 } from "../../app/store/counterSlice";
@@ -31,7 +34,12 @@ import "../../index.scss";
 import styles from "./Catalog.module.scss";
 
 function Catalog() {
+  const navigate = useNavigate();
+
   const count = useAppSelector(selectCount);
+  const selectedItem = useAppSelector(selectSliderItem);
+  const basket = useAppSelector(selectBasket);
+
   const status = useAppSelector(selectStatus);
   const images = useAppSelector(selectSliderItems);
 
@@ -71,6 +79,35 @@ function Catalog() {
   const successSubmit = () => {
     setOpenModalQuickOder(false);
     setTimeout(() => setOpenModalSuccess(true), 200);
+  };
+
+  const hanleClickAddToBasket = () => {
+    // Здесь будет логика: если у нас в корзине уже присутствует данный тип воды,
+    // то просто прибавим к уже имеющейся воде этого типа - выбранное количество бутылей
+    // Если в корзине этого типа ещё нет, значит, создаём
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignores
+    let findedItem = basket?.find((i) => i.id === selectedItem?.id);
+
+    if (findedItem) {
+      let newBasket = basket?.map((order) => {
+        if (order.id === findedItem?.id) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          return { ...order, count: count + order?.count };
+        } else return order;
+      });
+      dispatch(setAddToBasket(newBasket));
+    } else {
+      const newOrder = { ...selectedItem, count: count };
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const newBasketWithAddedOrder = basket.concat(newOrder);
+
+      dispatch(setAddToBasket(newBasketWithAddedOrder));
+    }
+
+    // navigate("/basket");
   };
 
   if (status === "loading") return <Loader />;
@@ -187,9 +224,15 @@ function Catalog() {
               <span>{getCommonCostBottles(count)}</span>
               <span>₽</span>
             </p>
-            <Link to="/basket" className={styles.link_to_basket}>
+            {/* <Link to="/basket" className={styles.link_to_basket}>
               в корзину
-            </Link>
+            </Link> */}
+            <div
+              onClick={hanleClickAddToBasket}
+              className={styles.link_to_basket}
+            >
+              в корзину
+            </div>
             <button
               className={styles.buy_one_click}
               onClick={() => setOpenModalQuickOder(true)}
