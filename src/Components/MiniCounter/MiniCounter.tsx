@@ -11,6 +11,8 @@ import {
 } from "../../app/store/counterSlice";
 
 import minus_icon from "../../app/assets/icons/minus_icon.svg";
+import minus_icon_blue from "../../app/assets/icons/minus_icon_blue.svg";
+
 import plus_icon from "../../app/assets/icons/plus_icon.svg";
 
 import styles from "./MiniCounter.module.scss";
@@ -72,7 +74,11 @@ const MiniCounter = ({
         }
       >
         {" "}
-        <img src={minus_icon} alt="Уменьшить количество" />
+        {orderCount === 1 || count === 1 ? (
+          <img src={minus_icon} alt="Уменьшить количество" />
+        ) : (
+          <img src={minus_icon_blue} alt="Уменьшить количество" />
+        )}
       </div>
 
       <div className={styles.count_value}>{orderCount || count}</div>
