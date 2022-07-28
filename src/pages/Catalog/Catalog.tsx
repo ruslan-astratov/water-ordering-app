@@ -107,7 +107,7 @@ function Catalog() {
       dispatch(setAddToBasket(newBasketWithAddedOrder));
     }
 
-    // navigate("/basket");
+    navigate("/basket");
   };
 
   if (status === "loading") return <Loader />;

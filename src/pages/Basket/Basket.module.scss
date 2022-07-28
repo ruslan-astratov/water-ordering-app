@@ -1,0 +1,59 @@
+.link_to_catalog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 26px;
+  border: 1px solid #ccddf0;
+  color: rgba(4, 73, 136, 0.57);
+  text-decoration: none;
+  margin-bottom: 30px;
+}
+
+.orders_list {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+
+  color: #5b5b5b;
+}
+
+.orders_list_header {
+  border-bottom: 2px solid #ccddf0;
+  display: flex;
+  padding-bottom: 12px;
+}
+
+.orders_list_items {
+}
+
+.orders_list_item {
+  display: flex;
+}
+
+.orders_list_item_desc {
+  width: 594px;
+}
+
+.orders_list_item_price {
+  width: 160px;
+}
+
+.orders_list_item_count {
+  width: 235px;
+}
+
+.orders_list_item_total_sum {
+}
+
+.orders_total_sum_wrapper {
+  width: 1080px;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #044988;
+  text-align: right;
+}
