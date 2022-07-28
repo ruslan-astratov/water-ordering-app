@@ -10,7 +10,7 @@ import {
   selectBasket,
 } from "../../app/store/counterSlice";
 
-import minus_icon from "../../app/assets/icons/minus_icon.svg";
+import minus_icon_gray from "../../app/assets/icons/minus_icon_gray.svg";
 import minus_icon_blue from "../../app/assets/icons/minus_icon_blue.svg";
 
 import plus_icon from "../../app/assets/icons/plus_icon.svg";
@@ -65,6 +65,20 @@ const MiniCounter = ({
     }
   };
 
+  const renderImageMinus = () => {
+    return orderCount ? (
+      orderCount === 1 ? (
+        <img src={minus_icon_gray} alt="Уменьшить количество" />
+      ) : (
+        <img src={minus_icon_blue} alt="Уменьшить количество" />
+      )
+    ) : count === 1 ? (
+      <img src={minus_icon_gray} alt="Уменьшить количество" />
+    ) : (
+      <img src={minus_icon_blue} alt="Уменьшить количество" />
+    );
+  };
+
   return (
     <div className={styles.mini_counter}>
       <div
@@ -73,12 +87,7 @@ const MiniCounter = ({
           orderCount ? calculateCountOneEl("-") : dispatch(decrement())
         }
       >
-        {" "}
-        {orderCount === 1 || count === 1 ? (
-          <img src={minus_icon} alt="Уменьшить количество" />
-        ) : (
-          <img src={minus_icon_blue} alt="Уменьшить количество" />
-        )}
+        {renderImageMinus()}
       </div>
 
       <div className={styles.count_value}>{orderCount || count}</div>
