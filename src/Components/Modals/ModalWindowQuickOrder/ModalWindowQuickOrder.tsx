@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MiniCounter from "../../../Components/MiniCounter/MiniCounter";
+import MiniImagePreview from "../../../Components/MiniImagePreview/MiniImagePreview";
 
 import InputMask from "react-input-mask";
 
@@ -175,7 +176,7 @@ const ModalWindowQuickOrder = ({
         <div className={styles.modal_body}>
           <div className={styles.order_item_block}>
             <figure className={styles.order_item_img_desc_wrapp}>
-              <img src={selectedItem?.thumbnail} alt="Мини превью" />
+              <MiniImagePreview thumbnail={selectedItem?.thumbnail || ""} />{" "}
               <figcaption>{selectedItem?.descr}</figcaption>
             </figure>
 

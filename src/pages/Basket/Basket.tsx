@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
+import MiniImagePreview from "../../Components/MiniImagePreview/MiniImagePreview";
 
 import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
 import {
@@ -16,9 +17,6 @@ import "../../index.scss";
 import styles from "./Basket.module.scss";
 
 function Basket() {
-  // const count = useAppSelector(selectCount);
-  // const status = useAppSelector(selectStatus);
-  // const images = useAppSelector(selectSliderItems);
   const basket = useAppSelector(selectBasket);
 
   return (
@@ -40,7 +38,10 @@ function Basket() {
             basket.map((order) => {
               return (
                 <div className={styles.orders_list_item} key={order.id}>
-                  <div className={styles.orders_list_item_desc}></div>
+                  <div className={styles.orders_list_item_desc}>
+                    <MiniImagePreview thumbnail={order?.thumbnail || ""} />{" "}
+                    <p>{order.descr}</p>
+                  </div>
                   <div className={styles.orders_list_item_price}></div>
                   <div className={styles.orders_list_item_count}></div>
                   <div className={styles.orders_list_item_total_sum}></div>

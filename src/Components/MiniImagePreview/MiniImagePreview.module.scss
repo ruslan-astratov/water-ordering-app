@@ -1,0 +1,27 @@
+.order_item_img_desc_wrapp {
+  display: flex;
+  align-items: center;
+  margin-right: 32px;
+}
+
+.order_item_img_desc_wrapp img,
+.mini_preview_img {
+  display: block;
+  width: 64px;
+  height: 64px;
+
+  background: #ffffff;
+  border: 1px solid #ccddf0;
+  border-radius: 10px;
+  object-fit: none;
+
+  margin-right: 12px;
+}
+
+.order_item_img_desc_wrapp figcaption {
+  width: 185px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+}
