@@ -1,6 +1,8 @@
 import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
+
 import MiniImagePreview from "../../Components/MiniImagePreview/MiniImagePreview";
+import MiniCounter from "../../Components/MiniCounter/MiniCounter";
 
 import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
 import {
@@ -12,6 +14,8 @@ import {
   fetchSliderItems,
   setSelectedSliderItem,
 } from "../../app/store/counterSlice";
+
+import { getCommonCostBottles } from "../../utils/utilFunctions";
 
 import "../../index.scss";
 import styles from "./Basket.module.scss";
@@ -42,10 +46,13 @@ function Basket() {
                     <MiniImagePreview thumbnail={order?.thumbnail || ""} />{" "}
                     <p>{order.descr}</p>
                   </div>
-                  <div className={styles.orders_list_item_price}></div>
-                  <div className={styles.orders_list_item_count}></div>
+                  <div className={styles.orders_list_item_price}>
+                    {getCommonCostBottles(order.count)}₽
+                  </div>
+                  <div className={styles.orders_list_item_count}>
+                    <MiniCounter orderCount={order.count}/>
+                  </div>
                   <div className={styles.orders_list_item_total_sum}></div>
-                  <div></div>
                 </div>
               );
             })}

@@ -103,7 +103,6 @@ function Catalog() {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const newBasketWithAddedOrder = basket.concat(newOrder);
-
       dispatch(setAddToBasket(newBasketWithAddedOrder));
     }
 
@@ -224,9 +223,7 @@ function Catalog() {
               <span>{getCommonCostBottles(count)}</span>
               <span>₽</span>
             </p>
-            {/* <Link to="/basket" className={styles.link_to_basket}>
-              в корзину
-            </Link> */}
+
             <div
               onClick={hanleClickAddToBasket}
               className={styles.link_to_basket}

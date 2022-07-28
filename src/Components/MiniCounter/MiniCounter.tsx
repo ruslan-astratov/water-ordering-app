@@ -12,7 +12,11 @@ import plus_icon from "../../app/assets/icons/plus_icon.svg";
 
 import styles from "./MiniCounter.module.scss";
 
-const MiniCounter = () => {
+interface MiniCounterProps {
+  orderCount?: number | null | undefined;
+}
+
+const MiniCounter = ({ orderCount = null }: MiniCounterProps) => {
   const count = useAppSelector(selectCount);
   const dispatch = useAppDispatch();
 
@@ -26,7 +30,7 @@ const MiniCounter = () => {
         <img src={minus_icon} alt="Уменьшить количество" />
       </div>
 
-      <div className={styles.count_value}>{count}</div>
+      <div className={styles.count_value}>{orderCount || count}</div>
 
       <div
         className={styles.mini_counter_increment_button}

@@ -29,10 +29,30 @@
 
 .orders_list_item {
   display: flex;
+  padding-top: 23px;
+  padding-bottom: 23px;
+  border-bottom: 1px solid #ccddf0;
+}
+
+.orders_list_item:last-child {
+  border-bottom: none;
 }
 
 .orders_list_item_desc {
   width: 594px;
+  display: flex;
+  align-items: center;
+}
+
+.orders_list_item_desc p {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #191919;
+}
+
+.orders_list_item_desc img {
+  margin-right: 50px;
 }
 
 .orders_list_item_price {
