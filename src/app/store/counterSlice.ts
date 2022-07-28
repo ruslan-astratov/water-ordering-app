@@ -24,6 +24,7 @@ export interface CounterState {
         descr: "";
         id: "";
       };
+  isOpenModalSuccess?: boolean;
 }
 
 const initialState: CounterState = {
@@ -32,6 +33,7 @@ const initialState: CounterState = {
   basket: [],
   sliderItems: [],
   selectedSliderItem: {},
+  isOpenModalSuccess: false,
 };
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -76,6 +78,9 @@ export const counterSlice = createSlice({
     setSelectedSliderItem: (state, action) => {
       state.selectedSliderItem = action.payload;
     },
+    setStateOpenModalSuccess: (state, action) => {
+      state.isOpenModalSuccess = action.payload;
+    },
   },
 
   extraReducers: (builder) => {
@@ -110,6 +115,7 @@ export const {
   decrement,
   reset,
   setSelectedSliderItem,
+  setStateOpenModalSuccess,
   incrementByAmount,
 } = counterSlice.actions;
 

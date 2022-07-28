@@ -35,7 +35,11 @@ function Catalog() {
 
   const dispatch = useAppDispatch();
 
-  const [isModal, setModal] = useState(false);
+  const [isOpenModalQuickOder, setOpenModalQuickOder] = useState(false);
+  const onCloseModalQuickOder = () => setOpenModalQuickOder(false);
+
+  const [isOpenModalSuccess, setOpenModalSuccess] = useState(false);
+  const onCloseModalSuccess = () => setOpenModalSuccess(false);
 
   const option = {
     infinite: false,
@@ -60,9 +64,7 @@ function Catalog() {
 
   useEffect(() => {
     dispatch(fetchSliderItems());
-  }, []);
-
-  const onClose = () => setModal(false);
+  }, [dispatch]);
 
   if (status === "loading") return <Loader />;
 
@@ -183,7 +185,7 @@ function Catalog() {
             </Link>
             <button
               className={styles.buy_one_click}
-              onClick={() => setModal(true)}
+              onClick={() => setOpenModalQuickOder(true)}
             >
               <img src={timer} alt="купить в 1 клик" />
               <span>купить в 1 клик</span>
@@ -201,9 +203,9 @@ function Catalog() {
       </div>
 
       <ModalWindowQuickOrder
-        visible={isModal}
+        visible={isOpenModalQuickOder}
         title="Быстрый заказ"
-        onClose={onClose}
+        onClose={onCloseModalQuickOder}
       />
     </div>
   );
