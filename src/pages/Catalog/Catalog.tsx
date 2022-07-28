@@ -209,12 +209,14 @@ function Catalog() {
         </div>
       </div>
 
-      <ModalWindowQuickOrder
-        visible={isOpenModalQuickOder}
-        title="Быстрый заказ"
-        onClose={onCloseModalQuickOder}
-        successSubmit={successSubmit}
-      />
+      {isOpenModalQuickOder && (
+        <ModalWindowQuickOrder
+          visible={isOpenModalQuickOder}
+          title="Быстрый заказ"
+          onClose={onCloseModalQuickOder}
+          successSubmit={successSubmit}
+        />
+      )}
 
       <ModalSuccess
         visible={isOpenModalSuccess}
