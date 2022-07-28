@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 
 import MiniImagePreview from "../../Components/MiniImagePreview/MiniImagePreview";
 import MiniCounter from "../../Components/MiniCounter/MiniCounter";
@@ -20,11 +20,32 @@ import {
   getCommonCostBottles,
 } from "../../utils/utilFunctions";
 
+import { sendOrder } from "../../api/api";
+
 import "../../index.scss";
 import styles from "./Basket.module.scss";
 
 function Basket() {
+  const navigate = useNavigate();
+
   const basket = useAppSelector(selectBasket);
+
+  const handleSubmit = async () => {
+    const payload = basket?.map((order) => {
+      return { order_id: order.id, order_count: order.count };
+    });
+
+    await sendOrder(payload)
+      .then((data) => {
+        console.log("Данные, полученные с POST запроса", data);
+        localStorage.setItem("order_status", JSON.stringify("Оформили заказ"));
+        navigate("/water-ordering-app");
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {});
+  };
 
   return (
     <div className="container basket-page">
@@ -68,6 +89,11 @@ function Basket() {
           {basket.reduce((acc, curr) => {
             return acc + getCommonCostBottles(curr.count);
           }, 0)}
+          ₽
+        </div>
+
+        <div onClick={handleSubmit} className={styles.form_submit_button}>
+          Отправить
         </div>
       </div>
     </div>

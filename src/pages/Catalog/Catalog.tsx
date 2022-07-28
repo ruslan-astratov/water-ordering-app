@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { Location } from "history";
+
 import ImageGallery from "react-image-gallery";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import clean_water from "../../app/assets/icons/clean_water.svg";
 import softy_water from "../../app/assets/icons/softy_water.svg";
@@ -35,6 +37,21 @@ import styles from "./Catalog.module.scss";
 
 function Catalog() {
   const navigate = useNavigate();
+  const [isOpenModalQuickOder, setOpenModalQuickOder] = useState(false);
+  const onCloseModalQuickOder = () => setOpenModalQuickOder(false);
+
+  const [isOpenModalSuccess, setOpenModalSuccess] = useState(false);
+  const onCloseModalSuccess = () => setOpenModalSuccess(false);
+
+  const order_status = JSON.parse(
+    // @ts-ignore
+    localStorage.getItem("order_status")
+  );
+
+  if (order_status === "Оформили заказ" && !isOpenModalSuccess) {
+    setOpenModalSuccess(true);
+    localStorage.removeItem("order_status");
+  }
 
   const count = useAppSelector(selectCount);
   const selectedItem = useAppSelector(selectSliderItem);
@@ -44,12 +61,6 @@ function Catalog() {
   const images = useAppSelector(selectSliderItems);
 
   const dispatch = useAppDispatch();
-
-  const [isOpenModalQuickOder, setOpenModalQuickOder] = useState(false);
-  const onCloseModalQuickOder = () => setOpenModalQuickOder(false);
-
-  const [isOpenModalSuccess, setOpenModalSuccess] = useState(false);
-  const onCloseModalSuccess = () => setOpenModalSuccess(false);
 
   const option = {
     infinite: false,
@@ -259,11 +270,12 @@ function Catalog() {
           successSubmit={successSubmit}
         />
       )}
-
-      <ModalSuccess
-        visible={isOpenModalSuccess}
-        onClose={onCloseModalSuccess}
-      />
+      {isOpenModalSuccess && (
+        <ModalSuccess
+          visible={isOpenModalSuccess}
+          onClose={onCloseModalSuccess}
+        />
+      )}
     </div>
   );
 }
