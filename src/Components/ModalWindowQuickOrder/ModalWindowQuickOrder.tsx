@@ -117,13 +117,14 @@ const ModalWindowQuickOrder = ({
 
   const handleSubmit = async () => {
     setIsSending(true);
+
     const payload = {
-      count: 5,
-      total_sum: 5,
-      have_container: false,
-      company_name: "ООО Кодеры",
-      phone: "+79186765060",
-      email: "ruslan.astratov@yandex.ru",
+      count,
+      total_sum: getCommonCostBottles(count),
+      have_container: haveСontainer,
+      company_name: nameCompany,
+      phone,
+      email,
     };
     await sendQuickOrder(payload)
       .then((data) => {
