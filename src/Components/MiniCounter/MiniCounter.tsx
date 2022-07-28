@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
 import {
@@ -23,6 +24,8 @@ const MiniCounter = ({
   orderCount = null,
   orderId = null,
 }: MiniCounterProps) => {
+  const navigate = useNavigate();
+
   const count = useAppSelector(selectCount);
   const basket = useAppSelector(selectBasket);
 
@@ -34,6 +37,8 @@ const MiniCounter = ({
         // Удаляем этот тип товара из корзины
         const filteredBasket = basket?.filter((order) => order.id !== orderId);
         dispatch(updateBasket(filteredBasket));
+
+        if (filteredBasket?.length === 0) navigate("/water-ordering-app");
       } else {
         // Уменьшаем количество  товара данного типа на 1
         const newBasket = basket?.map((order) => {

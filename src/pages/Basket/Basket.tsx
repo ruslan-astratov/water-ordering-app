@@ -15,7 +15,10 @@ import {
   setSelectedSliderItem,
 } from "../../app/store/counterSlice";
 
-import { getCommonCostBottles } from "../../utils/utilFunctions";
+import {
+  getCostOneBottle,
+  getCommonCostBottles,
+} from "../../utils/utilFunctions";
 
 import "../../index.scss";
 import styles from "./Basket.module.scss";
@@ -47,18 +50,20 @@ function Basket() {
                     <p>{order.descr}</p>
                   </div>
                   <div className={styles.orders_list_item_price}>
-                    {getCommonCostBottles(order.count)}₽
+                    {getCostOneBottle(order.count)}₽
                   </div>
                   <div className={styles.orders_list_item_count}>
                     <MiniCounter orderCount={order.count} orderId={order.id} />
                   </div>
-                  <div className={styles.orders_list_item_total_sum}></div>
+                  <div className={styles.orders_list_item_total_sum}>
+                    {getCommonCostBottles(order.count)}₽
+                  </div>
                 </div>
               );
             })}
         </div>
 
-        <div className={styles.orders_total_sum_wrapper}>итого: </div>
+        <div className={styles.orders_total_sum_wrapper}>итого: {}</div>
       </div>
     </div>
   );
