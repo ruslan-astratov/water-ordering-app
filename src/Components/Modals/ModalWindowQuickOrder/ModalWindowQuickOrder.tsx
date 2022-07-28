@@ -285,7 +285,7 @@ const ModalWindowQuickOrder = ({
             <button
               disabled={isDisabledSendButton || isSending}
               className={
-                !isSending
+                !isSending && !isDisabledSendButton
                   ? styles.form_submit_button
                   : styles.form_submit_button_disabled
               }
