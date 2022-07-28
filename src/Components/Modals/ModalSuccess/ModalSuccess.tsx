@@ -37,15 +37,13 @@ const ModalSuccess = ({
         aria-hidden="true"
       >
         <div className={styles.modal_header}>
+          <h3>Ваш заказ находится в обработке. Ждите…</h3>
+
           <span
             className={styles.modal_close}
             onClick={onClose}
             aria-hidden="true"
           ></span>
-        </div>
-
-        <div className={styles.modal_body}>
-          Ваш заказ находится в обработке. Ждите…
         </div>
       </div>
     </div>

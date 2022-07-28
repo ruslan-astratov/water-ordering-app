@@ -10,6 +10,15 @@
   margin-bottom: 30px;
 }
 
+.link_to_catalog::before {
+  content: "";
+  display: flex;
+  width: 10px;
+  height: 10px;
+  background-image: url("../../app/assets/icons/arrow_to_go_back.svg");
+  background-repeat: no-repeat;
+}
+
 .orders_list {
   font-weight: 700;
   font-size: 16px;
@@ -29,9 +38,32 @@
 
 .orders_list_item {
   display: flex;
+  align-items: center;
   padding-top: 23px;
   padding-bottom: 23px;
   border-bottom: 1px solid #ccddf0;
+}
+
+.orders_list_item .orders_list_item_price,
+.orders_list_item .orders_list_item_total_sum {
+  display: flex;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 32px;
+  color: #191919;
+}
+
+.orders_list_item .orders_list_item_price p,
+.orders_list_item .orders_list_item_total_sum p {
+  margin-right: 7px;
+}
+
+.orders_list_item span,
+.orders_list_item span {
+  font-size: 20px;
+  position: relative;
+  top: 2px;
 }
 
 .orders_list_item:last-child {

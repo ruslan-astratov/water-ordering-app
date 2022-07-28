@@ -112,6 +112,10 @@
   margin-right: 6px;
 }
 
+.prices_item:hover {
+  cursor: pointer;
+}
+
 .prices_block {
   display: flex;
   align-items: center;
@@ -131,6 +135,10 @@
   background: linear-gradient(0deg, #015584, #015584), #e4f1f9;
   border-radius: 10px;
   margin-bottom: 32px;
+}
+
+.buttons_block .link_to_basket:hover {
+  cursor: pointer !important;
 }
 
 .prices_item_active {
@@ -209,9 +217,10 @@
   text-transform: uppercase;
   color: #a6c6d8;
   text-align: left;
+  cursor: pointer;
 }
 .buy_one_click:hover {
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .buy_one_click img {

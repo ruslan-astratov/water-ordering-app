@@ -25,6 +25,7 @@ import {
   selectSliderItem,
   selectSliderItems,
   reset,
+  setCount,
   updateBasket,
   fetchSliderItems,
   setSelectedSliderItem,
@@ -168,6 +169,7 @@ function Catalog() {
 
           <div className={styles.prices_block}>
             <div
+              onClick={() => dispatch(setCount(2))}
               className={
                 count === 2 || count === 3
                   ? styles.prices_item_active
@@ -184,6 +186,7 @@ function Catalog() {
             </div>
 
             <div
+              onClick={() => dispatch(setCount(4))}
               className={
                 count >= 4 && count <= 9
                   ? styles.prices_item_active
@@ -200,6 +203,7 @@ function Catalog() {
             </div>
 
             <div
+              onClick={() => dispatch(setCount(11))}
               className={
                 count > 10 && count <= 20
                   ? styles.prices_item_active
@@ -216,6 +220,7 @@ function Catalog() {
             </div>
 
             <div
+              onClick={() => dispatch(setCount(21))}
               className={
                 count > 20 ? styles.prices_item_active : styles.prices_item
               }

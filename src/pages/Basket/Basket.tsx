@@ -1,19 +1,11 @@
-import React from "react";
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import MiniImagePreview from "../../Components/MiniImagePreview/MiniImagePreview";
 import MiniCounter from "../../Components/MiniCounter/MiniCounter";
 
-import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
-import {
-  selectCount,
-  selectStatus,
-  selectSliderItems,
-  reset,
-  selectBasket,
-  fetchSliderItems,
-  setSelectedSliderItem,
-} from "../../app/store/counterSlice";
+import { useAppSelector } from "../../app/store/hooks";
+import { selectBasket } from "../../app/store/counterSlice";
 
 import {
   getCostOneBottle,
@@ -30,11 +22,14 @@ function Basket() {
 
   const basket = useAppSelector(selectBasket);
 
+  useEffect(() => {
+    if (basket?.length === 0) navigate("/water-ordering-app");
+  }, []);
+
   const handleSubmit = async () => {
     const payload = basket?.map((order) => {
       return { order_id: order.id, order_count: order.count };
     });
-
     await sendOrder(payload)
       .then((data) => {
         console.log("Данные, полученные с POST запроса", data);
@@ -43,8 +38,7 @@ function Basket() {
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => {});
+      });
   };
 
   return (
@@ -71,13 +65,15 @@ function Basket() {
                     <p>{order.descr}</p>
                   </div>
                   <div className={styles.orders_list_item_price}>
-                    {getCostOneBottle(order.count)}₽
+                    <p>{getCostOneBottle(order.count)}</p>
+                    <span>₽</span>
                   </div>
                   <div className={styles.orders_list_item_count}>
                     <MiniCounter orderCount={order.count} orderId={order.id} />
                   </div>
                   <div className={styles.orders_list_item_total_sum}>
-                    {getCommonCostBottles(order.count)}₽
+                    <p>{getCommonCostBottles(order.count)}</p>
+                    <span>₽</span>
                   </div>
                 </div>
               );

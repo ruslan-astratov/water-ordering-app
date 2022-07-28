@@ -83,6 +83,9 @@ export const counterSlice = createSlice({
     reset: (state) => {
       state.value = 1;
     },
+    setCount: (state, action) => {
+      state.value = action.payload;
+    },
     setSelectedSliderItem: (state, action) => {
       state.selectedSliderItem = action.payload;
     },
@@ -116,6 +119,7 @@ export const {
   increment,
   decrement,
   reset,
+  setCount,
   setSelectedSliderItem,
   setStateOpenModalSuccess,
   updateBasket,
