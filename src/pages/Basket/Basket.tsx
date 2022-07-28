@@ -50,7 +50,7 @@ function Basket() {
                     {getCommonCostBottles(order.count)}₽
                   </div>
                   <div className={styles.orders_list_item_count}>
-                    <MiniCounter orderCount={order.count}/>
+                    <MiniCounter orderCount={order.count} orderId={order.id} />
                   </div>
                   <div className={styles.orders_list_item_total_sum}></div>
                 </div>
