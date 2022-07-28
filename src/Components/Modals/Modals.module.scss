@@ -254,6 +254,17 @@
   margin-bottom: 26px;
 }
 
+.form_item::after {
+  content: "*";
+  color: #7eddfb;
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+}
+
 .form_input,
 .form_input_invalid {
   display: flex;
