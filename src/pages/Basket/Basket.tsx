@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import MiniImagePreview from "../../Components/MiniImagePreview/MiniImagePreview";
@@ -18,6 +18,8 @@ import "../../index.scss";
 import styles from "./Basket.module.scss";
 
 function Basket() {
+  const [isSending, setIsSending] = useState(false);
+
   const navigate = useNavigate();
 
   const basket = useAppSelector(selectBasket);
@@ -27,6 +29,8 @@ function Basket() {
   }, []);
 
   const handleSubmit = async () => {
+    setIsSending(true);
+
     const payload = basket?.map((order) => {
       return { order_id: order.id, order_count: order.count };
     });
@@ -38,7 +42,8 @@ function Basket() {
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(() => setIsSending(false));
   };
 
   return (
@@ -88,9 +93,13 @@ function Basket() {
           ₽
         </div>
 
-        <div onClick={handleSubmit} className={styles.form_submit_button}>
+        <button
+          disabled={isSending}
+          onClick={handleSubmit}
+          className={styles.form_submit_button}
+        >
           Отправить
-        </div>
+        </button>
       </div>
     </div>
   );
