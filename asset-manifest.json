@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/water-ordering-app/static/css/main.ba14469d.css",
-    "main.js": "/water-ordering-app/static/js/main.fcc59875.js",
+    "main.js": "/water-ordering-app/static/js/main.54d22a49.js",
     "static/media/loader.png": "/water-ordering-app/static/media/loader.9620f6d4b3b6c01b8b2e.png",
     "static/media/tasty_water.svg": "/water-ordering-app/static/media/tasty_water.4519384159b19dfd28056b324cc5c4af.svg",
     "static/media/oxigen_water.svg": "/water-ordering-app/static/media/oxigen_water.4040d3baaf14d363e1fb240e3737c688.svg",
@@ -16,10 +16,10 @@
     "static/media/slider_control_left.svg": "/water-ordering-app/static/media/slider_control_left.d709e81018eac3c37e6a.svg",
     "static/media/slider_control_right.svg": "/water-ordering-app/static/media/slider_control_right.c29de2d2c2cd2e0f044a.svg",
     "main.ba14469d.css.map": "/water-ordering-app/static/css/main.ba14469d.css.map",
-    "main.fcc59875.js.map": "/water-ordering-app/static/js/main.fcc59875.js.map"
+    "main.54d22a49.js.map": "/water-ordering-app/static/js/main.54d22a49.js.map"
   },
   "entrypoints": [
     "static/css/main.ba14469d.css",
-    "static/js/main.fcc59875.js"
+    "static/js/main.54d22a49.js"
   ]
 }
