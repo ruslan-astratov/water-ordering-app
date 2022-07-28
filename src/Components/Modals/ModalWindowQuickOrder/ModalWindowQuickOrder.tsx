@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
-import MiniCounter from "../../Components/MiniCounter/MiniCounter";
-import cn from "classnames";
+import MiniCounter from "../../../Components/MiniCounter/MiniCounter";
 
 import InputMask from "react-input-mask";
 
-import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
-import { selectSliderItem, selectCount } from "../../app/store/counterSlice";
-import { getCommonCostBottles } from "../../utils/utilFunctions";
+import { useAppSelector, useAppDispatch } from "../../../app/store/hooks";
+import { selectSliderItem, selectCount } from "../../../app/store/counterSlice";
+import { getCommonCostBottles } from "../../../utils/utilFunctions";
 
-import { sendQuickOrder } from "../../api/api";
+import { sendQuickOrder } from "../../../api/api";
 
-import { phoneRegex, emailRegex } from "../../utils/regexp";
+import { phoneRegex, emailRegex } from "../../../utils/regexp";
 
-import "../../index.scss";
-import styles from "./ModalWindowQuickOrder.module.scss";
+import "../../../index.scss";
+import styles from "../Modals.module.scss";
 
 interface ModalWindowProps {
   visible: boolean;

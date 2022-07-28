@@ -10,8 +10,8 @@ import bottle from "../../app/assets/icons/bottle.svg";
 import timer from "../../app/assets/icons/timer.svg";
 
 import MiniCounter from "../../Components/MiniCounter/MiniCounter";
-import ModalWindowQuickOrder from "../../Components/ModalWindowQuickOrder/ModalWindowQuickOrder";
-import ModalSuccess from "../../Components/ModalSuccess/ModalSuccess";
+import ModalWindowQuickOrder from "../../Components/Modals/ModalWindowQuickOrder/ModalWindowQuickOrder";
+import ModalSuccess from "../../Components/Modals/ModalSuccess/ModalSuccess";
 
 import Loader from "../../Components/Loader/Loader";
 
