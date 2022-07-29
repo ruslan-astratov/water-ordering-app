@@ -44,9 +44,7 @@ function Catalog() {
   const [isOpenModalSuccess, setOpenModalSuccess] = useState(false);
   const onCloseModalSuccess = () => setOpenModalSuccess(false);
 
-  const order_status = JSON.parse(
-    localStorage.getItem("order_status")
-  );
+  const order_status = JSON.parse(localStorage.getItem("order_status"));
 
   if (order_status === "Оформили заказ" && !isOpenModalSuccess) {
     setOpenModalSuccess(true);
@@ -69,9 +67,7 @@ function Catalog() {
       console.log("Номер выбранного слайда", e + 1);
       const selectedSlideID = e + 1;
 
-      const selectedItem = images?.find(
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+      const selectedItem = (images as any[])?.find(
         (i) => Number(i.id) === selectedSlideID
       );
       // Здесь диспатчим в стор выбранный слайд
@@ -98,8 +94,7 @@ function Catalog() {
     // Здесь будет логика: если у нас в корзине уже присутствует данный тип воды,
     // то просто прибавим к уже имеющейся воде этого типа - выбранное количество бутылей
     // Если в корзине этого типа ещё нет, значит, создаём
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignores
+
     let findedItem = basket?.find((i) => i.id === selectedItem?.id);
 
     if (findedItem) {
@@ -111,9 +106,8 @@ function Catalog() {
       dispatch(updateBasket(newBasket));
     } else {
       const newOrder = { ...selectedItem, count: count };
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const newBasketWithAddedOrder = basket.concat(newOrder);
+
+      const newBasketWithAddedOrder = (basket as any[]).concat(newOrder);
       dispatch(updateBasket(newBasketWithAddedOrder));
     }
 
