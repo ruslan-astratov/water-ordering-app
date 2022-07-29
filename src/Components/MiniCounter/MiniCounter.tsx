@@ -45,8 +45,6 @@ const MiniCounter = ({
         // Уменьшаем количество  товара данного типа на 1
         const newBasket = basket?.map((order) => {
           if (order.id === orderId) {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignores
             return { ...order, count: order?.count - 1 };
           } else return order;
         });
@@ -56,8 +54,6 @@ const MiniCounter = ({
       // Увеличиваем количество  товара данного типа на 1
       const newBasket = basket?.map((order) => {
         if (order.id === orderId) {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignores
           return { ...order, count: order?.count + 1 };
         } else return order;
       });

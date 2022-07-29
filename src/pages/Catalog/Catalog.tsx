@@ -45,7 +45,6 @@ function Catalog() {
   const onCloseModalSuccess = () => setOpenModalSuccess(false);
 
   const order_status = JSON.parse(
-    // @ts-ignore
     localStorage.getItem("order_status")
   );
 
@@ -106,8 +105,6 @@ function Catalog() {
     if (findedItem) {
       let newBasket = basket?.map((order) => {
         if (order.id === findedItem?.id) {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
           return { ...order, count: count + order?.count };
         } else return order;
       });
