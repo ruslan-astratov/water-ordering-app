@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import MiniImagePreview from "../../Components/MiniImagePreview/MiniImagePreview";
 import MiniCounter from "../../Components/MiniCounter/MiniCounter";
 
-import { useAppSelector } from "../../app/store/hooks";
-import { selectBasket } from "../../app/store/counterSlice";
+import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
+import { selectBasket, updateBasket } from "../../app/store/counterSlice";
 
 import {
   getCostOneBottle,
@@ -19,8 +19,8 @@ import styles from "./Basket.module.scss";
 
 function Basket() {
   const [isSending, setIsSending] = useState(false);
-
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const basket = useAppSelector(selectBasket);
 
@@ -34,9 +34,12 @@ function Basket() {
     const payload = basket?.map((order) => {
       return { order_id: order.id, order_count: order.count };
     });
+
     await sendOrder(payload)
       .then((data) => {
         console.log("Данные, полученные с POST запроса", data);
+        // Очищаем корзину
+        dispatch(updateBasket([]));
         localStorage.setItem("order_status", JSON.stringify("Оформили заказ"));
         navigate("/water-ordering-app");
       })

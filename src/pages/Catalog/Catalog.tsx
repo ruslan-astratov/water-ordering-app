@@ -13,7 +13,6 @@ import timer from "../../app/assets/icons/timer.svg";
 import MiniCounter from "../../Components/MiniCounter/MiniCounter";
 import ModalWindowQuickOrder from "../../Components/Modals/ModalWindowQuickOrder/ModalWindowQuickOrder";
 import ModalSuccess from "../../Components/Modals/ModalSuccess/ModalSuccess";
-
 import Loader from "../../Components/Loader/Loader";
 
 import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
