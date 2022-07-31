@@ -1,8 +1,7 @@
-import { useState, useEffect, useRef } from "react";
-import { Location } from "history";
+import { useState, useEffect } from "react";
 
 import ImageGallery from "react-image-gallery";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import clean_water from "../../app/assets/icons/clean_water.svg";
 import softy_water from "../../app/assets/icons/softy_water.svg";
@@ -83,7 +82,7 @@ function Catalog() {
     if (images?.length === 0) {
       dispatch(fetchSliderItems());
     }
-  }, [dispatch]);
+  }, []);
 
   const successSubmit = () => {
     setOpenModalQuickOder(false);
