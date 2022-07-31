@@ -1,124 +1,117 @@
-import React, { useEffect, useState } from "react";
-import MiniCounter from "../../../Components/MiniCounter/MiniCounter";
-import MiniImagePreview from "../../../Components/MiniImagePreview/MiniImagePreview";
+import React, { useEffect, useState } from 'react'
+import MiniCounter from '../../../Components/MiniCounter/MiniCounter'
+import MiniImagePreview from '../../../Components/MiniImagePreview/MiniImagePreview'
 
-import InputMask from "react-input-mask";
+import InputMask from 'react-input-mask'
 
-import { useAppSelector, useAppDispatch } from "../../../app/store/hooks";
-import { selectSliderItem, selectCount } from "../../../app/store/counterSlice";
-import { getCommonCostBottles } from "../../../utils/utilFunctions";
+import { useAppSelector, useAppDispatch } from '../../../app/store/hooks'
+import { selectSliderItem, selectCount } from '../../../app/store/counterSlice'
+import { getCommonCostBottles } from '../../../utils/utilFunctions'
 
-import { sendQuickOrder } from "../../../api/api";
+import { sendQuickOrder } from '../../../api/api'
 
-import { phoneRegex, emailRegex } from "../../../utils/regexp";
+import { phoneRegex, emailRegex } from '../../../utils/regexp'
 
-import "../../../index.scss";
-import styles from "../Modals.module.scss";
+import '../../../index.scss'
+import styles from '../Modals.module.scss'
 
 interface ModalWindowProps {
-  visible: boolean;
-  title: string;
-  onClose: () => void;
-  successSubmit: () => void;
+  visible: boolean
+  title: string
+  onClose: () => void
+  successSubmit: () => void
 }
 
 const ModalWindowQuickOrder = ({
   visible = false,
-  title = "",
+  title = '',
   onClose = () => {},
   successSubmit = () => {},
 }: ModalWindowProps) => {
-  const [isSending, setIsSending] = useState(false);
+  const [isSending, setIsSending] = useState(false)
 
-  const [haveСontainer, setHaveСontainer] = useState(false);
-  const [isDisabledSendButton, toggleDisabledSendButton] = useState(true);
+  const [haveСontainer, setHaveСontainer] = useState(false)
+  const [isDisabledSendButton, toggleDisabledSendButton] = useState(true)
 
-  const [nameCompany, setNameCompany] = useState("");
-  const [isValidNameCompany, toggleValidNameCompany] = useState(false);
+  const [nameCompany, setNameCompany] = useState('')
+  const [isValidNameCompany, toggleValidNameCompany] = useState(false)
 
-  const [phone, setPhone] = useState("");
-  const [isValidPhone, toggleValidPhone] = useState(false);
+  const [phone, setPhone] = useState('')
+  const [isValidPhone, toggleValidPhone] = useState(false)
 
-  const [email, setEmail] = useState("");
-  const [isValidEmail, toggleValidEmail] = useState(false);
+  const [email, setEmail] = useState('')
+  const [isValidEmail, toggleValidEmail] = useState(false)
 
   // Управление позицией лейбла - в маске для ввода телефона
-  const [isHideLabel, toggleHideLabel] = useState(false);
+  const [isHideLabel, toggleHideLabel] = useState(false)
   const hideLabel = () => {
-    toggleHideLabel(true);
-  };
+    toggleHideLabel(true)
+  }
 
-  const selectedItem = useAppSelector(selectSliderItem);
-  const count = useAppSelector(selectCount);
+  const selectedItem = useAppSelector(selectSliderItem)
+  const count = useAppSelector(selectCount)
 
   // Метод блокировки/разблокировки кнопки. Смотрим - заполнены ли все три обязательных поля + если заполнены, все они должны быть валидны
   // Будет срабатывать как при блюре/выходе из каждого инпута, так и при вводе символов в каждый инпут
   const checkFieldsOnValid = () => {
-    if (
-      nameCompany &&
-      phone &&
-      email &&
-      isValidNameCompany &&
-      isValidPhone &&
-      isValidEmail
-    ) {
-      toggleDisabledSendButton(false);
-    } else toggleDisabledSendButton(true);
-  };
+    if (nameCompany && phone && email && isValidNameCompany && isValidPhone && isValidEmail) {
+      toggleDisabledSendButton(false)
+    } else toggleDisabledSendButton(true)
+  }
 
   useEffect(() => {
     // Метод блокировки, разблокировки будет срабатывать каждый раз - при вводе в любой из инпутов
-    checkFieldsOnValid();
-  }, [nameCompany, phone, email]);
+    checkFieldsOnValid()
+  }, [nameCompany, phone, email])
 
   // создаем обработчик нажатия клавиши Esc
   //   Поправить event: any
   const onKeydown = (event: any) => {
-    if (event.key === "Escape") {
-      onClose();
+    if (event.key === 'Escape') {
+      onClose()
     }
-  };
+  }
 
   const checkValidInputCompanyName = (e: any) => {
-    const val = e.target.value;
-    setNameCompany(val);
+    const val = e.target.value
+    setNameCompany(val)
     // Сначала валидируем сам инпут, затем запускаем метод блокировки/разблокировки кнопки
     if (val && val.length >= 3 && val.length <= 256) {
-      toggleValidNameCompany(true);
-      setTimeout(() => checkFieldsOnValid(), 0);
+      toggleValidNameCompany(true)
+      setTimeout(() => checkFieldsOnValid(), 0)
     } else {
-      toggleValidNameCompany(false);
+      toggleValidNameCompany(false)
     }
-  };
+  }
 
   const checkValidInputPhone = (e: any) => {
-    const val = e.target.value;
-    if (val === "") toggleHideLabel(false);
-    setPhone(val);
+    const val = e.target.value
+    if (val === '') toggleHideLabel(false)
+    setPhone(val)
 
     // Сначала валидируем сам инпут, затем запускаем метод блокировки/разблокировки кнопки
     if (val.length > 0 && phoneRegex.test(val)) {
-      toggleValidPhone(true);
-      setTimeout(() => checkFieldsOnValid(), 0);
+      toggleValidPhone(true)
+      setTimeout(() => checkFieldsOnValid(), 0)
     } else {
-      toggleValidPhone(false);
+      toggleValidPhone(false)
     }
-  };
+  }
 
   const checkValidInputEmail = (e: any) => {
-    const val = e.target.value;
-    setEmail(val);
+    const val = e.target.value
+    setEmail(val)
     // Сначала валидируем сам инпут, затем запускаем метод блокировки/разблокировки кнопки
     if (val && emailRegex.test(val)) {
-      toggleValidEmail(true);
-      setTimeout(() => checkFieldsOnValid(), 0);
+      toggleValidEmail(true)
+      setTimeout(() => checkFieldsOnValid(), 0)
     } else {
-      toggleValidEmail(false);
+      toggleValidEmail(false)
     }
-  };
+  }
 
   const handleSubmit = async () => {
-    setIsSending(true);
+    setIsSending(true)
 
     const payload = {
       count,
@@ -127,48 +120,39 @@ const ModalWindowQuickOrder = ({
       company_name: nameCompany,
       phone,
       email,
-    };
+    }
     await sendQuickOrder(payload)
       .then((data) => {
-        console.log("Данные, полученные с POST запроса", data);
-        successSubmit();
+        console.log('Данные, полученные с POST запроса', data)
+        successSubmit()
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err)
       })
       .finally(() => {
-        setIsSending(false);
-      });
-  };
+        setIsSending(false)
+      })
+  }
 
-  const showInvalidDescForNameCompany = nameCompany && !isValidNameCompany;
-  const showInvalidDescForPhone =
-    phone !== "" && phone !== "+7 (___) ___-__-__" && !isValidPhone;
-  const showInvalidDescForEmail = email && !isValidEmail;
+  const showInvalidDescForNameCompany = nameCompany && !isValidNameCompany
+  const showInvalidDescForPhone = phone !== '' && phone !== '+7 (___) ___-__-__' && !isValidPhone
+  const showInvalidDescForEmail = email && !isValidEmail
 
   useEffect(() => {
-    document.addEventListener("keydown", onKeydown);
-    return () => document.removeEventListener("keydown", onKeydown);
-  });
+    document.addEventListener('keydown', onKeydown)
+    return () => document.removeEventListener('keydown', onKeydown)
+  })
 
   // если компонент невидим, то не отображаем его
-  if (!visible) return null;
+  if (!visible) return null
 
   // или возвращаем верстку модального окна
   return (
-    <div className={styles.modal} onClick={onClose} aria-hidden="true">
-      <div
-        className={styles.modal_dialog}
-        onClick={(e) => e.stopPropagation()}
-        aria-hidden="true"
-      >
+    <div className={styles.modal} onClick={onClose} aria-hidden='true'>
+      <div className={styles.modal_dialog} onClick={(e) => e.stopPropagation()} aria-hidden='true'>
         <div className={styles.modal_header}>
           <h3>{title}</h3>
-          <span
-            className={styles.modal_close}
-            onClick={onClose}
-            aria-hidden="true"
-          >
+          <span className={styles.modal_close} onClick={onClose} aria-hidden='true'>
             {/* <img alt="Facebook" src={close_icon} /> */}
           </span>
         </div>
@@ -176,7 +160,7 @@ const ModalWindowQuickOrder = ({
         <div className={styles.modal_body}>
           <div className={styles.order_item_block}>
             <figure className={styles.order_item_img_desc_wrapp}>
-              <MiniImagePreview thumbnail={selectedItem?.thumbnail || ""} />{" "}
+              <MiniImagePreview thumbnail={selectedItem?.thumbnail || ''} />{' '}
               <figcaption>{selectedItem?.descr}</figcaption>
             </figure>
 
@@ -193,25 +177,18 @@ const ModalWindowQuickOrder = ({
               <div className={styles.switch_toggle_desc_wrapp}>
                 <span
                   className={
-                    haveСontainer
-                      ? styles.switch_toggle_desc_active
-                      : styles.switch_toggle_desc
+                    haveСontainer ? styles.switch_toggle_desc_active : styles.switch_toggle_desc
                   }
                 >
                   Без тары
                 </span>
-                <label className="checkbox-ios">
-                  <input
-                    type="checkbox"
-                    onChange={() => setHaveСontainer(!haveСontainer)}
-                  />
-                  <span className="checkbox-ios-switch"></span>
+                <label className='checkbox-ios'>
+                  <input type='checkbox' onChange={() => setHaveСontainer(!haveСontainer)} />
+                  <span className='checkbox-ios-switch'></span>
                 </label>
                 <span
                   className={
-                    !haveСontainer
-                      ? styles.switch_toggle_desc_active
-                      : styles.switch_toggle_desc
+                    !haveСontainer ? styles.switch_toggle_desc_active : styles.switch_toggle_desc
                   }
                 >
                   Тара есть
@@ -223,21 +200,17 @@ const ModalWindowQuickOrder = ({
           <form className={styles.form}>
             <div className={styles.form_item}>
               <input
-                type="text"
+                type='text'
                 maxLength={256}
                 className={
-                  showInvalidDescForNameCompany
-                    ? styles.form_input_invalid
-                    : styles.form_input
+                  showInvalidDescForNameCompany ? styles.form_input_invalid : styles.form_input
                 }
                 required
                 value={nameCompany}
                 onChange={(e) => checkValidInputCompanyName(e)}
                 onBlur={(e) => checkValidInputCompanyName(e)}
               />
-              <label className={styles.form_label}>
-                Ваше имя или название компании
-              </label>
+              <label className={styles.form_label}>Ваше имя или название компании</label>
               {showInvalidDescForNameCompany && (
                 <span className={styles.form_input_invalid_decr}>
                   допускается строка длиной от трёх символов
@@ -247,34 +220,22 @@ const ModalWindowQuickOrder = ({
 
             <div className={styles.form_item}>
               <InputMask
-                mask="+7 (999) 999-99-99"
+                mask='+7 (999) 999-99-99'
                 value={phone}
                 onChange={(e) => checkValidInputPhone(e)}
                 onBlur={(e) => checkValidInputPhone(e)}
                 onFocus={hideLabel}
-                className={
-                  showInvalidDescForPhone
-                    ? styles.form_input_invalid
-                    : styles.form_input
-                }
+                className={showInvalidDescForPhone ? styles.form_input_invalid : styles.form_input}
               />
-              <label
-                className={
-                  isHideLabel ? styles.form_label : styles.form_label_active
-                }
-              >
-                Телефон{" "}
+              <label className={isHideLabel ? styles.form_label : styles.form_label_active}>
+                Телефон{' '}
               </label>
             </div>
 
             <div className={styles.form_item}>
               <input
-                type="text"
-                className={
-                  showInvalidDescForEmail
-                    ? styles.form_input_invalid
-                    : styles.form_input
-                }
+                type='text'
+                className={showInvalidDescForEmail ? styles.form_input_invalid : styles.form_input}
                 required
                 value={email}
                 onChange={(e) => checkValidInputEmail(e)}
@@ -298,7 +259,7 @@ const ModalWindowQuickOrder = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ModalWindowQuickOrder;
+export default ModalWindowQuickOrder

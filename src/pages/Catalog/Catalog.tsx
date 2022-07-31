@@ -1,21 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react'
 
-import ImageGallery from "react-image-gallery";
-import { useNavigate } from "react-router-dom";
+import ImageGallery from 'react-image-gallery'
+import { useNavigate } from 'react-router-dom'
 
-import clean_water from "../../app/assets/icons/clean_water.svg";
-import softy_water from "../../app/assets/icons/softy_water.svg";
-import oxigen_water from "../../app/assets/icons/oxigen_water.svg";
-import tasty_water from "../../app/assets/icons/tasty_water.svg";
-import bottle from "../../app/assets/icons/bottle.svg";
-import timer from "../../app/assets/icons/timer.svg";
+import clean_water from '../../app/assets/icons/clean_water.svg'
+import softy_water from '../../app/assets/icons/softy_water.svg'
+import oxigen_water from '../../app/assets/icons/oxigen_water.svg'
+import tasty_water from '../../app/assets/icons/tasty_water.svg'
+import bottle from '../../app/assets/icons/bottle.svg'
+import timer from '../../app/assets/icons/timer.svg'
 
-import MiniCounter from "../../Components/MiniCounter/MiniCounter";
-import ModalWindowQuickOrder from "../../Components/Modals/ModalWindowQuickOrder/ModalWindowQuickOrder";
-import ModalSuccess from "../../Components/Modals/ModalSuccess/ModalSuccess";
-import Loader from "../../Components/Loader/Loader";
+import MiniCounter from '../../Components/MiniCounter/MiniCounter'
+import ModalWindowQuickOrder from '../../Components/Modals/ModalWindowQuickOrder/ModalWindowQuickOrder'
+import ModalSuccess from '../../Components/Modals/ModalSuccess/ModalSuccess'
+import Loader from '../../Components/Loader/Loader'
 
-import { useAppSelector, useAppDispatch } from "../../app/store/hooks";
+import { useAppSelector, useAppDispatch } from '../../app/store/hooks'
 import {
   selectCount,
   selectStatus,
@@ -27,100 +27,98 @@ import {
   updateBasket,
   fetchSliderItems,
   setSelectedSliderItem,
-} from "../../app/store/counterSlice";
+} from '../../app/store/counterSlice'
 
-import { getCommonCostBottles } from "../../utils/utilFunctions";
+import { getCommonCostBottles } from '../../utils/utilFunctions'
 
-import "../../index.scss";
-import styles from "./Catalog.module.scss";
+import '../../index.scss'
+import styles from './Catalog.module.scss'
 
 function Catalog() {
-  const navigate = useNavigate();
-  const [isOpenModalQuickOder, setOpenModalQuickOder] = useState(false);
-  const onCloseModalQuickOder = () => setOpenModalQuickOder(false);
+  const navigate = useNavigate()
+  const [isOpenModalQuickOder, setOpenModalQuickOder] = useState(false)
+  const onCloseModalQuickOder = () => setOpenModalQuickOder(false)
 
-  const [isOpenModalSuccess, setOpenModalSuccess] = useState(false);
-  const onCloseModalSuccess = () => setOpenModalSuccess(false);
+  const [isOpenModalSuccess, setOpenModalSuccess] = useState(false)
+  const onCloseModalSuccess = () => setOpenModalSuccess(false)
 
-  const order_status = JSON.parse(localStorage.getItem("order_status"));
+  const order_status = JSON.parse(localStorage.getItem('order_status'))
 
-  if (order_status === "Оформили заказ" && !isOpenModalSuccess) {
-    setOpenModalSuccess(true);
-    localStorage.removeItem("order_status");
+  if (order_status === 'Оформили заказ' && !isOpenModalSuccess) {
+    setOpenModalSuccess(true)
+    localStorage.removeItem('order_status')
   }
 
-  const count = useAppSelector(selectCount);
-  const selectedItem = useAppSelector(selectSliderItem);
-  const basket = useAppSelector(selectBasket);
+  const count = useAppSelector(selectCount)
+  const selectedItem = useAppSelector(selectSliderItem)
+  const basket = useAppSelector(selectBasket)
 
-  const status = useAppSelector(selectStatus);
-  const images = useAppSelector(selectSliderItems);
+  const status = useAppSelector(selectStatus)
+  const images = useAppSelector(selectSliderItems)
 
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   const option = {
     infinite: false,
     lazyLoad: true,
     onSlide: function show(e: number) {
-      console.log("Номер выбранного слайда", e + 1);
-      const selectedSlideID = e + 1;
+      console.log('Номер выбранного слайда', e + 1)
+      const selectedSlideID = e + 1
 
-      const selectedItem = (images as any[])?.find(
-        (i) => Number(i.id) === selectedSlideID
-      );
+      const selectedItem = (images as any[])?.find((i) => Number(i.id) === selectedSlideID)
       // Здесь диспатчим в стор выбранный слайд
-      dispatch(setSelectedSliderItem(selectedItem));
-      dispatch(reset());
+      dispatch(setSelectedSliderItem(selectedItem))
+      dispatch(reset())
     },
     onThumbnailClick: function show(e: any) {
-      dispatch(reset());
+      dispatch(reset())
     },
-  };
+  }
 
   useEffect(() => {
     if (images?.length === 0) {
-      dispatch(fetchSliderItems());
+      dispatch(fetchSliderItems())
     }
-  }, []);
+  }, [])
 
   const successSubmit = () => {
-    setOpenModalQuickOder(false);
-    setTimeout(() => setOpenModalSuccess(true), 200);
-  };
+    setOpenModalQuickOder(false)
+    setTimeout(() => setOpenModalSuccess(true), 200)
+  }
 
   const hanleClickAddToBasket = () => {
     // Вне зависимости от того какой товар мы выбрали, диспатчим в стор первый слайд (сбрасываем состояние слайдера)
-    const firstSlide = [...images][0];
-    dispatch(setSelectedSliderItem(firstSlide));
+    const firstSlide = [...images][0]
+    dispatch(setSelectedSliderItem(firstSlide))
 
     // Здесь будет логика: если у нас в корзине уже присутствует данный тип воды,
     // то просто прибавим к уже имеющейся воде этого типа - выбранное количество бутылей
     // Если в корзине этого типа ещё нет, значит, создаём
 
-    let findedItem = basket?.find((i) => i.id === selectedItem?.id);
+    const findedItem = basket?.find((i) => i.id === selectedItem?.id)
 
     if (findedItem) {
-      let newBasket = basket?.map((order) => {
+      const newBasket = basket?.map((order) => {
         if (order.id === findedItem?.id) {
-          return { ...order, count: count + order?.count };
-        } else return order;
-      });
-      dispatch(updateBasket(newBasket));
+          return { ...order, count: count + order?.count }
+        } else return order
+      })
+      dispatch(updateBasket(newBasket))
     } else {
-      const newOrder = { ...selectedItem, count: count };
+      const newOrder = { ...selectedItem, count: count }
 
-      const newBasketWithAddedOrder = (basket as any[]).concat(newOrder);
-      dispatch(updateBasket(newBasketWithAddedOrder));
+      const newBasketWithAddedOrder = (basket as any[]).concat(newOrder)
+      dispatch(updateBasket(newBasketWithAddedOrder))
     }
 
-    navigate("/basket");
-  };
+    navigate('/basket')
+  }
 
-  if (status === "loading") return <Loader />;
+  if (status === 'loading') return <Loader />
 
   return (
     <div className={`container + ${styles.catalog_page}`}>
-      <h1 className="page_heading mb_44">Каталог</h1>
+      <h1 className='page_heading mb_44'>Каталог</h1>
 
       <div className={styles.slider_desc_wrapper}>
         <div className={styles.slider_block}>
@@ -132,30 +130,29 @@ function Catalog() {
           <h2 className={styles.desc_block_heading}>
             Вода питьевая «Suyum» <br /> в 18,9 л бутылях
           </h2>
-          <p className="paragraph mb_16">
-            Подходит для ежедневного питья и приготовления пищи. Характеризуется{" "}
-            <br />
+          <p className='paragraph mb_16'>
+            Подходит для ежедневного питья и приготовления пищи. Характеризуется <br />
             приятным естественным вкусом, свежестью и мягкостью дождевой воды.
           </p>
 
           <div className={styles.properties_block}>
             <figure className={styles.properties_item}>
-              <img src={clean_water} alt="Кристально очищена" />
+              <img src={clean_water} alt='Кристально очищена' />
               <figcaption>Кристально очищенная</figcaption>
             </figure>
 
             <figure className={styles.properties_item}>
-              <img src={softy_water} alt="Идеально мягкая" />
+              <img src={softy_water} alt='Идеально мягкая' />
               <figcaption>Идеально мягкая</figcaption>
             </figure>
 
             <figure className={styles.properties_item}>
-              <img src={oxigen_water} alt="Насыщенная кислородом" />
+              <img src={oxigen_water} alt='Насыщенная кислородом' />
               <figcaption>Насыщенная кислородом</figcaption>
             </figure>
 
             <figure className={styles.properties_item}>
-              <img src={tasty_water} alt="Отличный вкус" />
+              <img src={tasty_water} alt='Отличный вкус' />
               <figcaption>Отличный вкус</figcaption>
             </figure>
           </div>
@@ -164,13 +161,11 @@ function Catalog() {
             <div
               onClick={() => dispatch(setCount(2))}
               className={
-                count === 2 || count === 3
-                  ? styles.prices_item_active
-                  : styles.prices_item
+                count === 2 || count === 3 ? styles.prices_item_active : styles.prices_item
               }
             >
               <div className={styles.prices_item_icon_wrapper}>
-                <img src={bottle} alt="2-3 бутыля" width={13} height={20} />
+                <img src={bottle} alt='2-3 бутыля' width={13} height={20} />
                 <span>2-3</span>
               </div>
               <p className={styles.price}>
@@ -180,14 +175,10 @@ function Catalog() {
 
             <div
               onClick={() => dispatch(setCount(4))}
-              className={
-                count >= 4 && count <= 9
-                  ? styles.prices_item_active
-                  : styles.prices_item
-              }
+              className={count >= 4 && count <= 9 ? styles.prices_item_active : styles.prices_item}
             >
               <div className={styles.prices_item_icon_wrapper}>
-                <img src={bottle} alt="4-9 бутылей" width={13} height={20} />
+                <img src={bottle} alt='4-9 бутылей' width={13} height={20} />
                 <span>4-9</span>
               </div>
               <p className={styles.price}>
@@ -197,14 +188,10 @@ function Catalog() {
 
             <div
               onClick={() => dispatch(setCount(11))}
-              className={
-                count > 10 && count <= 20
-                  ? styles.prices_item_active
-                  : styles.prices_item
-              }
+              className={count > 10 && count <= 20 ? styles.prices_item_active : styles.prices_item}
             >
               <div className={styles.prices_item_icon_wrapper}>
-                <img src={bottle} alt="10 бутылей" width={13} height={20} />
+                <img src={bottle} alt='10 бутылей' width={13} height={20} />
                 <span>&gt;10</span>
               </div>
               <p className={styles.price}>
@@ -214,12 +201,10 @@ function Catalog() {
 
             <div
               onClick={() => dispatch(setCount(21))}
-              className={
-                count > 20 ? styles.prices_item_active : styles.prices_item
-              }
+              className={count > 20 ? styles.prices_item_active : styles.prices_item}
             >
               <div className={styles.prices_item_icon_wrapper}>
-                <img src={bottle} alt="20 бутылей" width={13} height={20} />
+                <img src={bottle} alt='20 бутылей' width={13} height={20} />
                 <span>&gt;20</span>
               </div>
               <p className={styles.price}>
@@ -235,27 +220,20 @@ function Catalog() {
               <span>₽</span>
             </p>
 
-            <div
-              onClick={hanleClickAddToBasket}
-              className={styles.link_to_basket}
-            >
+            <div onClick={hanleClickAddToBasket} className={styles.link_to_basket}>
               в корзину
             </div>
-            <button
-              className={styles.buy_one_click}
-              onClick={() => setOpenModalQuickOder(true)}
-            >
-              <img src={timer} alt="купить в 1 клик" />
+            <button className={styles.buy_one_click} onClick={() => setOpenModalQuickOder(true)}>
+              <img src={timer} alt='купить в 1 клик' />
               <span>купить в 1 клик</span>
             </button>
           </div>
 
           <p className={styles.annotation_block}>
             Минимальный заказ от 2 до 3 шт.
-            <br /> Цена одного бутыля зависит от их количества в заказе. При
-            заказе более 10 бутылей цена товара
-            <br /> договорная. Заказывайте чистую питьевую воду в
-            интернет-магазине!
+            <br /> Цена одного бутыля зависит от их количества в заказе. При заказе более 10 бутылей
+            цена товара
+            <br /> договорная. Заказывайте чистую питьевую воду в интернет-магазине!
           </p>
         </div>
       </div>
@@ -263,19 +241,16 @@ function Catalog() {
       {isOpenModalQuickOder && (
         <ModalWindowQuickOrder
           visible={isOpenModalQuickOder}
-          title="Быстрый заказ"
+          title='Быстрый заказ'
           onClose={onCloseModalQuickOder}
           successSubmit={successSubmit}
         />
       )}
       {isOpenModalSuccess && (
-        <ModalSuccess
-          visible={isOpenModalSuccess}
-          onClose={onCloseModalSuccess}
-        />
+        <ModalSuccess visible={isOpenModalSuccess} onClose={onCloseModalSuccess} />
       )}
     </div>
-  );
+  )
 }
 
-export default Catalog;
+export default Catalog

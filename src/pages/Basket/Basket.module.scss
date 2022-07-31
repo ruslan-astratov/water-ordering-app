@@ -11,11 +11,11 @@
 }
 
 .link_to_catalog::before {
-  content: "";
+  content: '';
   display: flex;
   width: 10px;
   height: 10px;
-  background-image: url("../../app/assets/icons/arrow_to_go_back.svg");
+  background-image: url('../../app/assets/icons/arrow_to_go_back.svg');
   background-repeat: no-repeat;
 }
 
