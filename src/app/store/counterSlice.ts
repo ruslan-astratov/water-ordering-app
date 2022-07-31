@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "./store";
 
 import { getWaterItems } from "../../api/api";
+import { initialMockData } from "../../utils/mockData";
 
 type SliderItemType = {
   original?: string;
@@ -22,7 +23,7 @@ export interface CounterState {
   value: number;
   status: "idle" | "loading" | "failed";
   basket?: OrderType[] | [];
-  sliderItems?: [];
+  sliderItems?: any[];
   selectedSliderItem?:
     | SliderItemType
     | {
@@ -96,6 +97,8 @@ export const counterSlice = createSlice({
       })
       .addCase(fetchSliderItems.rejected, (state) => {
         state.status = "failed";
+        state.sliderItems = initialMockData;
+        state.selectedSliderItem = initialMockData[0] || {};
       });
   },
 });

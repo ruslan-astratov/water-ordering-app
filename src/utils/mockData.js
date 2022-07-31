@@ -1,4 +1,4 @@
-export const initialData = [
+export const initialMockData = [
   {
     original:
       "https://firebasestorage.googleapis.com/v0/b/water-ordering-app.appspot.com/o/big_image_preview.png?alt=media&token=226a1cb0-5c12-4263-b9cc-dd192df9ff07",
