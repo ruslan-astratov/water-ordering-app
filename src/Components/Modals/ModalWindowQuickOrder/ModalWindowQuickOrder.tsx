@@ -62,7 +62,7 @@ const ModalWindowQuickOrder = ({
   useEffect(() => {
     // Метод блокировки, разблокировки будет срабатывать каждый раз - при вводе в любой из инпутов
     checkFieldsOnValid()
-  }, [nameCompany, phone, email])
+  }, [nameCompany, phone, email, isDisabledSendButton])
 
   // создаем обработчик нажатия клавиши Esc
   //   Поправить event: any

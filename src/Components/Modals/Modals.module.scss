@@ -325,6 +325,7 @@
   width: 362px;
   height: 63px;
   background: #10ebf8;
+
   border: 2px solid #10ebf8;
   margin-left: auto;
   border-radius: 2px;
@@ -340,6 +341,10 @@
   color: #191919;
   text-decoration: none;
   transition: all 0.4s ease;
+}
+
+.form_submit_button_disabled {
+  background: #f810ab;
 }
 
 .form_submit_button:hover {
