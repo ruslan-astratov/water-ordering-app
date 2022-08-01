@@ -5,10 +5,10 @@ import { getWaterItems } from '../../api/api'
 import { initialMockData } from '../../utils/mockData'
 
 type SliderItemType = {
-  original?: string
-  thumbnail?: string
-  descr?: string
-  id?: string
+  original: string
+  thumbnail: string
+  descr: string
+  id: string
 }
 
 type OrderType = {
@@ -22,8 +22,8 @@ type OrderType = {
 export interface CounterState {
   value: number
   status: 'idle' | 'loading' | 'failed'
-  basket?: OrderType[] | []
-  sliderItems?: any[]
+  basket?: OrderType[]
+  sliderItems?: SliderItemType[]
   selectedSliderItem?:
     | SliderItemType
     | {
@@ -40,7 +40,12 @@ const initialState: CounterState = {
   status: 'idle',
   basket: [],
   sliderItems: [],
-  selectedSliderItem: {},
+  selectedSliderItem: {
+    original: '',
+    thumbnail: '',
+    descr: '',
+    id: '',
+  },
   isOpenModalSuccess: false,
 }
 
@@ -95,7 +100,7 @@ export const counterSlice = createSlice({
       .addCase(fetchSliderItems.rejected, (state) => {
         state.status = 'failed'
         state.sliderItems = initialMockData
-        state.selectedSliderItem = initialMockData[0] || {}
+        state.selectedSliderItem = initialMockData[0]
       })
   },
 })

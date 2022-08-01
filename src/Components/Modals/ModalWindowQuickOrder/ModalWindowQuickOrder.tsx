@@ -4,7 +4,7 @@ import MiniImagePreview from '../../../Components/MiniImagePreview/MiniImagePrev
 
 import InputMask from 'react-input-mask'
 
-import { useAppSelector, useAppDispatch } from '../../../app/store/hooks'
+import { useAppSelector } from '../../../app/store/hooks'
 import { selectSliderItem, selectCount } from '../../../app/store/counterSlice'
 import { getCommonCostBottles } from '../../../utils/utilFunctions'
 
