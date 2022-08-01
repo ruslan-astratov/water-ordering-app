@@ -66,13 +66,13 @@ const ModalWindowQuickOrder = ({
 
   // создаем обработчик нажатия клавиши Esc
   //   Поправить event: any
-  const onKeydown = (event: any) => {
+  const onKeydown = (event: KeyboardEvent) => {
     if (event.key === 'Escape') {
       onClose()
     }
   }
 
-  const checkValidInputCompanyName = (e: any) => {
+  const checkValidInputCompanyName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value
     setNameCompany(val)
     // Сначала валидируем сам инпут, затем запускаем метод блокировки/разблокировки кнопки
@@ -84,7 +84,7 @@ const ModalWindowQuickOrder = ({
     }
   }
 
-  const checkValidInputPhone = (e: any) => {
+  const checkValidInputPhone = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value
     if (val === '') toggleHideLabel(false)
     setPhone(val)
@@ -98,7 +98,7 @@ const ModalWindowQuickOrder = ({
     }
   }
 
-  const checkValidInputEmail = (e: any) => {
+  const checkValidInputEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value
     setEmail(val)
     // Сначала валидируем сам инпут, затем запускаем метод блокировки/разблокировки кнопки
